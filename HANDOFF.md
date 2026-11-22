@@ -3,7 +3,7 @@
 > Single source of truth for every collaborator and every AI agent. Read this first; update it last (see §6).
 > Issue details live in [`ISSUES.md`](ISSUES.md).
 
-_Last updated: 2026-11-21 (agent prompts + rebuild script) · Repo state at that time: 1 commit (`eacade8 Initial commit`), README only._
+_Last updated: 2026-11-22 (setup complete, ready to start issues) · Repo state: `main` at `6fd0ae0`; planning files and scripts only, no project code yet._
 
 ---
 
@@ -34,7 +34,7 @@ _Last updated: 2026-11-21 (agent prompts + rebuild script) · Repo state at that
 - **Grading:** 29 marks = 5 sections × 5 + 4 for peer grading. Video and notebook are graded **together**, so what's said must match the code.
 - **The 5 graded sections:** (1) Predictive task · (2) EDA / data / preprocessing · (3) Modeling · (4) Evaluation · (5) Related work.
 - **Hard rule from the rubric:** a presentation that "seems to be automatically generated" scores **1/5**. Agents may draft code and analysis; **slides wording and narration are written and spoken by humans.**
-- **Current state:** nothing built. README is a title only. No code, data, deps, or branches.
+- **Current state:** planning is done, project work not started. In the repo: `AGENTS.md`, `HANDOFF.md`, `ISSUES.md`, `scripts/` (GitHub issue tools), `docs/github_issue_map.md`, a minimal `.gitignore`. `docs/spec.pdf` is on disk but uncommitted (it goes in with I-02). No code, data, dependencies or feature branches yet.
 - **Key entry points (once built):** `workbook.ipynb` (final deliverable source) · `src/data.py` (shared loader + split) · `scripts/check_submission.py` (local autograder).
 
 ## 2. Architecture & Key Paths (proposed, created by I-01)
@@ -109,9 +109,10 @@ python scripts/check_submission.py                                   # local aut
 
 | State | Issues |
 |---|---|
-| ✅ Done | Repo created (`eacade8`). Spec breakdown + this plan (I-00). |
+| ✅ Done | I-00 planning: label system, 22 GitHub issues (#23 to #44) with agent prompts, milestones, day-by-day plan, AGENTS.md. |
 | 🔄 In progress | none |
-| 🟢 Ready now | **I-01** scaffold · **I-02** copy spec in · **I-03** choose dataset + task (**top priority, blocks most work**) · **I-18** submission checker |
+| 🟢 Ready now | **I-01** scaffold (#23) · **I-02** spec (#24) · **I-03** choose dataset + task (#25, **top priority, blocks most work**) · **I-18** submission checker (#40, after I-01) |
+| ⚠️ Waiting | Aditya to accept the GitHub invite, then Waleed runs `scripts/assign_aditya.py` |
 | ⏳ Next after I-03 | I-04 loader/split → then I-05, I-06/07, I-08, I-14 can run **in parallel** |
 | 🧱 Critical path | I-03 → I-04 → I-08 → I-09/I-10 → I-12 → I-16 → I-17 → I-19 → I-20 → I-21 |
 
