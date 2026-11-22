@@ -571,8 +571,8 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Context & Scope:** `scripts/check_submission.py`, replicating the spec's autograder: both files exist; HTML prefix check; Drive file ID parsing, download >1 MB, `video/mp4` MIME via `python-magic` (YouTube links skip the download checks).
 **Acceptance Criteria:**
 - [ ] Passes on a known-good HTML file and MP4 Drive link
-- [ ] Fails with a clear message on: renamed `.ipynb`, a link without a file ID, a non-MP4 file
-- [ ] Usage documented in README
+- [x] Fails with a clear message on: renamed `.ipynb`, a link without a file ID, a non-MP4 file
+- [x] Usage documented in README
 **Dependencies:** I-01
 
 **Agent prompt** (paste into your coding agent):
