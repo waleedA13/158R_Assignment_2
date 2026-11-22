@@ -3,7 +3,7 @@
 > Single source of truth for every collaborator and every AI agent. Read this first; update it last (see §6).
 > Issue details live in [`ISSUES.md`](ISSUES.md).
 
-_Last updated: 2026-11-21 by Claude (initial setup) · Repo state at that time: 1 commit (`eacade8 Initial commit`), README only._
+_Last updated: 2026-11-21 (agent prompts + rebuild script) · Repo state at that time: 1 commit (`eacade8 Initial commit`), README only._
 
 ---
 
@@ -13,11 +13,12 @@ _Last updated: 2026-11-21 by Claude (initial setup) · Repo state at that time: 
 |---|---|---|---|
 | A1 | **Submission due Tue of week 10 ≈ Tue 2026-12-01** (UCSD Fall '26). Peer grading due in week 11. | Drives every deadline below | Gradescope |
 | A2 | **Late submissions not accepted** (OSD-only late window) | No slack, so the internal freeze is 2 days early | Spec |
-| A3 | Group size and members not yet known (max 4) | Owners in ISSUES.md are blank | Team |
+| A3 | **Team of 2:** Waleed (`waleedA13`) and Aditya (`AdityaJadhav17`, not yet a collaborator) | Aditya's issues are assigned once he accepts the invite (`scripts/assign_aditya.py`) | Team |
 | A4 | **No dataset or predictive task chosen yet** | Blocks almost everything (I-03) | Team |
 | A5 | Stack: Python 3 + Jupyter, pandas/numpy/scikit-learn/matplotlib (course-standard). Nothing installed in repo yet | Proposed layout in §2 | I-01 |
 | A6 | Spec PDF lives *outside* this repo at `../Assignment 2/158 _ 258 2026 Assignment 2.pdf` | Agents can't see it unless copied in | I-02 |
-| A7 | GitHub remote `waleedA13/158R_Assignment_2` is the shared repo; issues not yet created on GitHub | Use ISSUES.md until imported | Repo owner |
+| A7 | GitHub issues are the live tracker, titled `[I-NN] ...`. `docs/github_issue_map.md` maps IDs to issue numbers. Rebuild with `scripts/create_github_issues.py` (run on your own machine only) | Find work by I-NN | Repo owner |
+| A8 | Work split Waleed/Aditya (see ISSUES.md "Parts and roles"), tracked by `Waleed` / `Aditya` labels | Filter by label to see your queue | Team |
 
 **Internal milestones (from A1):** Sun 11-22 decision locked · Wed 11-25 models + eval done · Fri 11-27 notebook frozen · Sun 11-29 video recorded · **Mon 11-30 submitted** (1-day buffer).
 
@@ -41,7 +42,7 @@ _Last updated: 2026-11-21 by Claude (initial setup) · Repo state at that time: 
 158R_Assignment_2/
 ├── HANDOFF.md              # this file
 ├── ISSUES.md               # issue backlog + label system
-├── AGENTS.md / CLAUDE.md   # 2-line pointer to HANDOFF.md (so agents auto-load it)
+├── AGENTS.md              # shared agent instructions; both maintain it. Every issue prompt says to read it
 ├── README.md
 ├── requirements.txt        # pinned deps
 ├── .gitignore              # ignores data/, *.mp4, .ipynb_checkpoints, __pycache__
@@ -71,6 +72,7 @@ _Last updated: 2026-11-21 by Claude (initial setup) · Repo state at that time: 
 ## 3. Agent & Collaborator Protocol
 
 **Claiming work**
+0. Your queue is the label with your name (`Waleed` or `Aditya`) on GitHub. Work it in milestone order; help the other person only within the same Part.
 1. Pick an issue labelled `status:ready` with no open dependencies.
 2. Put your name/agent tag in its **Owner** field in `ISSUES.md` *and* set `status:in-progress`. Commit that change alone, push it **before** starting. First push wins.
 3. One owner per issue. One owner per notebook file. Never edit a notebook you don't own. Leave a note in `HANDOFF.md §5` instead.
@@ -95,7 +97,9 @@ bash scripts/export.sh                                               # -> workbo
 python scripts/check_submission.py                                   # local autograder
 ```
 
-**Agent-specific rules**
+**Agent-specific rules** (full list in `AGENTS.md`)
+- Each issue ends with an **Agent prompt**: paste it into your coding agent. Prompts start with "Read AGENTS.md and HANDOFF.md first".
+- Never write to GitHub from a remote or hosted agent session that adds attribution footers; run GitHub scripts locally with your own `gh` login.
 - Ground claims in repo files; don't invent results, citations, or dataset facts. Cite related work with real links in `docs/related_work.md`.
 - Issues labelled `owner:human` (video, slides wording, peer grading, Gradescope upload, Drive sharing) are **off-limits to agents** except for checklists or tooling.
 - If blocked, set `status:blocked`, write why in §5, and stop. Don't work around a team decision.
@@ -112,7 +116,18 @@ python scripts/check_submission.py                                   # local aut
 
 ## 5. Session Log & Open Notes (append newest on top)
 
-- **2026-11-21 · Claude:** Inspected repo (README only, 1 commit, `main` only, no TODOs). Wrote `HANDOFF.md` + `ISSUES.md`. Nothing committed to git. Open: A1 to A4 need human confirmation; issues not yet on GitHub.
+- **2026-11-21 · agent:** Added `AGENTS.md` (shared instructions, replaces any other agent file). Every issue in ISSUES.md now has an agent prompt; labels are `P0`/`P1`, `Order N`, `Waleed`/`Aditya`. `scripts/create_github_issues.py` now deletes the old issues and recreates them from Waleed's machine; `scripts/assign_aditya.py` assigns Aditya after he accepts the invite. Next: Waleed runs both scripts.
+
+- **2026-11-21 · agent:** Renamed labels `role:P1` -> `Waleed`, `role:P2` -> `Aditya` on GitHub and in docs/script.
+
+- **2026-11-21 · agent:** Added label descriptions and `Order 1` to `Order 11` labels (dependency sequence) on GitHub and in ISSUES.md. Note: priority labels on GitHub are now `P0`/`P1` (renamed on GitHub); docs still say `priority:p0`/`p1`.
+
+- **2026-11-21 · agent:** Team is 2 people. Replaced `role:A` to `role:D` with `role:P1` (waleedA13) / `role:P2` (teammate) on GitHub. P1 assigned. Next: invite P2 as collaborator and assign `role:P2` issues.
+
+- **2026-11-21 · agent:** Created on GitHub: labels (incl. `role:A` to `role:D`), 6 milestones, issues #1 to #22 in I-NN order. Assigned `waleedA13` to role A + everyone issues. Script switched to REST (`gh api`). Next: invite teammates, then assign by `role:` label.
+
+- **2026-11-21 · agent:** Inspected repo (README only, 1 commit, `main` only, no TODOs). Wrote `HANDOFF.md` + `ISSUES.md`. Nothing committed to git. Open: A1 to A4 need human confirmation; issues not yet on GitHub.
+- **2026-11-21 · agent:** Added `scripts/create_github_issues.py` (labels, 6 milestones, 22 ordered issues, role-based assignees). Dry run passes. Needs ROLES usernames filled in, then run with `gh`.
 
 ## 6. Handoff Checklist (before ending ANY session)
 
