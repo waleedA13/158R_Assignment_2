@@ -134,8 +134,8 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:setup` `area:infra` `P1` `status:ready` `owner:agent-ok` `Order 1` `Waleed`
 **Context & Scope:** The spec lives outside the repo (`../Assignment 2/158 _ 258 2026 Assignment 2.pdf`). Copy to `docs/spec.pdf` and add `docs/requirements.md` with the 5 sections and their bullets so agents can read it as text.
 **Acceptance Criteria:**
-- [ ] `docs/spec.pdf` committed
-- [ ] `docs/requirements.md` lists all 5 sections, the rubric (0 to 5), the submission files and the autograder checks
+- [x] `docs/spec.pdf` committed
+- [x] `docs/requirements.md` lists all 5 sections, the rubric (0 to 5), the submission files and the autograder checks
 **Dependencies:** none
 
 **Agent prompt** (paste into your coding agent):
