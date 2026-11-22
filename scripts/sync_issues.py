@@ -7,9 +7,23 @@ Run on your own machine (your gh login) from the repo root:
 Updates: issue body, labels (keeps whatever status: label is currently on GitHub), milestone,
 and milestone due dates/descriptions. Leaves assignees and open/closed state alone.
 """
-import argparse, os, sys
+
+import argparse
+import os
+import sys
+
 sys.path.insert(0, os.path.dirname(__file__))
-from create_github_issues import R, PARTS, PART_OF, ORDER_COLORS, LABEL_STYLE, PREFIX_COLOR, api, parse_issues, link_ids
+from create_github_issues import (
+    LABEL_STYLE,
+    ORDER_COLORS,
+    PART_OF,
+    PARTS,
+    PREFIX_COLOR,
+    R,
+    api,
+    link_ids,
+    parse_issues,
+)
 
 
 def main():
@@ -25,22 +39,34 @@ def main():
             sys.exit(f"Milestone missing: {title}. Run create_github_issues.py instead.")
         if (m.get("description") or "") != desc or (m.get("due_on") or "")[:10] != due:
             print(f"  update {title}: due {due}")
-            api("PATCH", f"{R}/milestones/{m['number']}", {"description": desc, "due_on": f"{due}T23:59:00Z"}, dry)
+            api(
+                "PATCH",
+                f"{R}/milestones/{m['number']}",
+                {"description": desc, "due_on": f"{due}T23:59:00Z"},
+                dry,
+            )
 
     print("== Labels")
-    have = {l["name"] for l in api("GET", f"{R}/labels?per_page=100")}
+    have = {lab["name"] for lab in api("GET", f"{R}/labels?per_page=100")}
     issues = parse_issues()
-    for l in sorted({l for i in issues for l in i["labels"]} - have):
-        if l.startswith("Order "):
-            k = int(l.split()[1]); color, desc = ORDER_COLORS[min(k, 11) - 1], f"Step {k} of 11. Start when its dependencies are closed. Same order = can run in parallel"
+    for lab in sorted({lab for i in issues for lab in i["labels"]} - have):
+        if lab.startswith("Order "):
+            k = int(lab.split()[1])
+            color, desc = (
+                ORDER_COLORS[min(k, 11) - 1],
+                f"Step {k} of 11. Start when its dependencies are closed. Same order = can run in parallel",
+            )
         else:
-            color, desc = LABEL_STYLE.get(l, (PREFIX_COLOR.get(l.split(":")[0], "ededed"), ""))
-        print(f"  create {l}")
-        api("POST", f"{R}/labels", {"name": l, "color": color, "description": desc}, dry)
+            color, desc = LABEL_STYLE.get(lab, (PREFIX_COLOR.get(lab.split(":")[0], "ededed"), ""))
+        print(f"  create {lab}")
+        api("POST", f"{R}/labels", {"name": lab, "color": color, "description": desc}, dry)
 
     print("== Issues")
-    gh = {i["title"][1:5]: i for i in api("GET", f"{R}/issues?state=all&per_page=100")
-          if "pull_request" not in i and i["title"].startswith("[I-")}
+    gh = {
+        i["title"][1:5]: i
+        for i in api("GET", f"{R}/issues?state=all&per_page=100")
+        if "pull_request" not in i and i["title"].startswith("[I-")
+    }
     num = {k: v["number"] for k, v in gh.items()}
     changed = 0
     for iss in issues:
@@ -48,25 +74,40 @@ def main():
         if not g:
             print(f"  {iss['id']}: not on GitHub, skipped")
             continue
-        current = [l["name"] for l in g["labels"]]
-        status = [l for l in current if l.startswith("status:")] or [l for l in iss["labels"] if l.startswith("status:")]
-        labels = [l for l in iss["labels"] if not l.startswith("status:")] + status
+        current = [lab["name"] for lab in g["labels"]]
+        status = [lab for lab in current if lab.startswith("status:")] or [
+            lab for lab in iss["labels"] if lab.startswith("status:")
+        ]
+        labels = [lab for lab in iss["labels"] if not lab.startswith("status:")] + status
         body = link_ids(iss["body"], num)
         title = f"[{iss['id']}] {iss['title']}"
         msn = ms[PARTS[PART_OF[iss["id"]]][0]]["number"]
         diff = []
-        if (g.get("body") or "").strip() != body.strip(): diff.append("body")
-        if sorted(current) != sorted(labels): diff.append("labels")
-        if (g.get("milestone") or {}).get("number") != msn: diff.append("milestone")
-        if g["title"] != title: diff.append("title")
+        if (g.get("body") or "").strip() != body.strip():
+            diff.append("body")
+        if sorted(current) != sorted(labels):
+            diff.append("labels")
+        if (g.get("milestone") or {}).get("number") != msn:
+            diff.append("milestone")
+        if g["title"] != title:
+            diff.append("title")
         if not diff:
             continue
         changed += 1
         print(f"  {iss['id']} #{g['number']}: {', '.join(diff)}")
-        api("PATCH", f"{R}/issues/{g['number']}", {"title": title, "body": body, "labels": labels, "milestone": msn}, dry)
+        api(
+            "PATCH",
+            f"{R}/issues/{g['number']}",
+            {"title": title, "body": body, "labels": labels, "milestone": msn},
+            dry,
+        )
     print(f"{changed} issue(s) {'would change' if dry else 'updated'}.")
     if not dry:
-        bad = [i["number"] for i in api("GET", f"{R}/issues?state=all&per_page=100") if "_Generated by [" in (i.get("body") or "")]
+        bad = [
+            i["number"]
+            for i in api("GET", f"{R}/issues?state=all&per_page=100")
+            if "_Generated by [" in (i.get("body") or "")
+        ]
         print("Footer check: " + (", ".join(f"#{b}" for b in bad) if bad else "none"))
 
 
