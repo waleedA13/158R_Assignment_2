@@ -101,10 +101,10 @@ Aditya can start I-14 (related work) and I-05 (task framing) right after I-03 is
 **Labels:** `type:setup` `area:infra` `P0` `status:ready` `owner:agent-ok` `Order 1` `Waleed`
 **Context & Scope:** Repo has only `README.md`. Create the layout in HANDOFF.md §2: `src/`, `notebooks/`, `scripts/`, `docs/`, `slides/`, `data/` (gitignored). Add `requirements.txt` (pandas, numpy, scikit-learn, matplotlib, jupyter, nbconvert; pin versions).  `AGENTS.md` already exists (shared agent instructions); leave it. Expand `README.md` with a one-paragraph description + setup command.
 **Acceptance Criteria:**
-- [ ] `pip install -r requirements.txt` succeeds in a fresh venv
-- [ ] `.gitignore` excludes `data/`, `*.mp4`, `.ipynb_checkpoints/`, `__pycache__/`, `.venv/`
-- [ ] Empty `src/__init__.py`, `src/data.py`, `src/metrics.py`, `src/models.py` exist
-- [ ] `python -c "import src.data, src.metrics, src.models"` works from the repo root
+- [x] `pip install -r requirements.txt` succeeds in a fresh venv (Python 3.12)
+- [x] `.gitignore` excludes `data/`, `*.mp4`, `.ipynb_checkpoints/`, `__pycache__/`, `.venv/`
+- [x] Empty `src/__init__.py`, `src/data.py`, `src/metrics.py`, `src/models.py` exist
+- [x] `python -c "import src.data, src.metrics, src.models"` works from the repo root
 **Dependencies:** none
 
 **Agent prompt** (paste into your coding agent):
