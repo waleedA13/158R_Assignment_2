@@ -1,6 +1,6 @@
 # I-03 options: dataset and predictive task
 
-Three candidates for Waleed and Aditya to choose from. Drafted from the dataset page (https://cseweb.ucsd.edu/~jmcauley/datasets.html) and the papers linked there; every paper link below was opened and its numbers read from its results table. **This file does not pick one.** Record the choice in `docs/decision.md` (template at the bottom).
+Three candidates for Waleed and Aditya. Drafted from the dataset page (https://cseweb.ucsd.edu/~jmcauley/datasets.html) and the papers linked there; every paper link below was opened and its numbers read from its results table. **This file does not pick one.** Record the choice in `docs/decision.md` (template at the bottom).
 
 ## Comparison
 
@@ -15,7 +15,7 @@ Three candidates for Waleed and Aditya to choose from. Drafted from the dataset 
 | Course-model baseline | Logistic regression on size and measurement features | Latent factor model with user and item biases | Jaccard item similarity, or BPR |
 | Plausible main model | User and item latent factors + biases on top of the features, with class weighting | Latent factors + TF-IDF review-text features (or a time-aware variant) | Item-to-item model using play order (sequence-aware), compared with BPR |
 | Paper to compare with | Misra, Wan, McAuley, RecSys 2018. Average AUC on RTR: 0.61 (simplest baseline) to **0.719** (their model) | McAuley and Leskovec, WWW 2013. BeerAdvocate "overall" MSE: latent factor **0.452**, their model **0.400** (most recent reviews) | Kang and McAuley (SASRec), ICDM 2018. Steam: Hit@10 **0.8729**, NDCG@10 **0.6306**; GRU4Rec+ 0.8018 / 0.5595 |
-| Strengths for grading | Rich EDA (body measurements, sizes); class imbalance makes the metric discussion (Section 4) substantive; clean literature comparison | Classic course content; very direct comparison with the paper; review text gives a clear "beyond baseline" step | Large, realistic; ranking metrics are a good Section 4 topic |
+| Strengths for grading | Rich EDA (body measurements, sizes); class imbalance makes the metric discussion (Section 4) substantive; clean literature comparison | Classic course content; the paper reports the same metric on the same data; review text gives an obvious step beyond the baseline | Large, realistic; ranking metrics are a good Section 4 topic |
 | Risks | Many missing measurement values (must document handling); labels are imbalanced | Close to the course's standard rating-prediction exercises, so harder to stand out; big file | Paper's neural model is far beyond course scope, so our numbers will look weak next to it; heaviest preprocessing; check overlap with Assignment 1 |
 
 ## Links
