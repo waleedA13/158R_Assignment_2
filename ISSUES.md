@@ -23,7 +23,7 @@ Deadline: **Tue 2026-12-01** (Tuesday of week 10; UCSD instruction began Thu Sep
 
 | Part | Due | Issues |
 |---|---|---|
-| 1 Setup and decision | Sun 11-22 | I-01, I-02, I-03, I-18 |
+| 1 Setup and decision | Sun 11-22 | I-01, I-02, I-03, I-18, I-23 |
 | 2 Data and task | Tue 11-24 | I-04, I-05, I-06, I-07, I-14 |
 | 3 Models and evaluation | Wed 11-25 | I-08, I-09, I-10, I-12 |
 | 4 Analysis and notebook | Fri 11-27 | I-11, I-13, I-15, I-16, I-17 |
@@ -34,7 +34,7 @@ Deadline: **Tue 2026-12-01** (Tuesday of week 10; UCSD instruction began Thu Sep
 
 | Day | Waleed | Aditya |
 |---|---|---|
-| Sun 11-22 | I-01, I-02, I-18 · I-03 with Aditya | I-03 with Waleed |
+| Sun 11-22 | I-01, I-23 CI, I-02, I-18 · I-03 with Aditya | I-03 with Waleed |
 | Mon 11-23 | I-04 split | I-05 task framing, I-14 related work |
 | Tue 11-24 | I-06 EDA, I-07 preprocessing | I-08 baselines, I-09 course model |
 | Wed 11-25 | I-16 notebook skeleton (Sections 1, 2, 5 in) · I-19 slide template + intro, S1, S2 slides | I-10 main model, I-12 test evaluation |
@@ -62,7 +62,7 @@ Every section needs all three spec parts (context, discussion, code), or graders
 
 | Owner | GitHub | Owns | Issues |
 |---|---|---|---|
-| Waleed | `waleedA13` | dataset decision, setup, split, EDA, preprocessing, notebook assembly, submission | I-01, I-02, I-03, I-04, I-06, I-07, I-16, I-17, I-18, I-21 |
+| Waleed | `waleedA13` | dataset decision, setup, CI, split, EDA, preprocessing, notebook assembly, submission | I-01, I-02, I-03, I-04, I-06, I-07, I-16, I-17, I-18, I-21, I-23 |
 | Aditya | `AdityaJadhav17` | task framing, all models, evaluation, related work | I-05, I-08, I-09, I-10, I-11, I-12, I-13, I-14, I-15 |
 | Both | Waleed + Aditya | slides for your own sections, video, peer grading (each person) | I-19, I-20, I-22 |
 
@@ -94,6 +94,7 @@ Aditya can start I-14 (related work) and I-05 (task framing) right after I-03 is
 | 9 | I-20 | Record and edit ~20-min MP4 video | P0 | human | I-17, I-19 | blocked |
 | 10 | I-21 | Upload video, write `video_url.txt`, submit | P0 | human | I-17, I-18, I-20 | blocked |
 | 11 | I-22 | Complete peer grading (each member) | P0 | human | I-21 + instructor release | blocked |
+| 2 | I-23 | Set up CI pipeline (format, lint, audit, tests) | P0 | agent-ok | I-01 | review |
 
 ---
 
@@ -125,6 +126,7 @@ Verify (paste output in PR):
 - git status shows data/ is ignored after creating data/raw/test.txt (delete the test file after).
 - python -c "import src.data, src.metrics, src.models" succeeds from the repo root.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-01] Scaffold repo layout, deps, .gitignore" for Aditya to review. Do not mark anything done that you did not verify.
 ```
 
@@ -152,6 +154,7 @@ Steps:
 3. Keep it under 120 lines. Do not copy long passages verbatim.
 Verify: every one of the 5 sections and every autograder check in the PDF appears in docs/requirements.md (list them side by side in the PR description).
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-02] Add assignment spec to `docs/`" for Aditya to review. Do not mark anything done that you did not verify.
 ```
 
@@ -184,6 +187,7 @@ Then the humans:
    Agreed by: Waleed, Aditya (date)
 2. Close this issue and move I-04, I-05, I-14 to status:ready.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-03] Decide dataset, predictive task, metric" for Aditya to review. Do not mark anything done that you did not verify.
 ```
 
@@ -202,11 +206,13 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 Read AGENTS.md and HANDOFF.md first, then this issue (I-04) in ISSUES.md. Follow their rules exactly.
 Branch: i04-split from up-to-date main. Commit messages: "[I-04] ...".
 
+Tests first: before writing any implementation, add tests for this issue's acceptance criteria under tests/unit/test_data.py (deterministic split, proportions, no ID overlap between splits, leakage rule) and tests/integration/test_pipeline.py (load -> split on tests/fixtures/), run them and confirm they FAIL, and commit them alone as "[I-04] add failing tests". Then implement until they pass.
 Task: implement the one shared loader and split in src/data.py, following docs/decision.md exactly.
 Steps:
 1. Add a download section to README.md: where to get the raw files and the exact path under data/raw/.
 2. In src/data.py implement:
-   - constants at the top: RAW_DIR, PROCESSED_DIR, SEED = 158, split proportions from docs/decision.md
+   - constants at the top: RAW_DIR = Path(os.environ.get("DATA_DIR", "data/raw")), PROCESSED_DIR, SEED = 158, split proportions from docs/decision.md
+   - tests/fixtures/: a small sample (about 200 rows) in exactly the raw file format, so CI runs without the real data (DATA_DIR=tests/fixtures). Use synthetic rows or a tiny public sample; nothing private
    - load() -> pandas DataFrame of the raw data (subsample here if decision.md says so, with the fixed seed)
    - split(df, seed=SEED) -> (train, valid, test) using the scheme in docs/decision.md, with a guard against leakage (e.g. by time or by user if the task needs it)
    - a docstring on split() stating proportions and the leakage rule
@@ -216,6 +222,7 @@ Verify (paste in PR):
 - from notebooks/: import sys; sys.path.append(".."); from src.data import load, split works.
 Do not: look at test-set statistics, or change decision.md.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-04] Shared data loader + fixed split in `src/data.py`" for Aditya to review. Do not mark anything done that you did not verify.
 ```
 
@@ -244,6 +251,7 @@ Steps:
 3. Keep it tight: about 250 to 400 words total.
 Verify: each Section 1 bullet in docs/requirements.md maps to a heading (list the mapping in the PR). Nothing contradicts docs/decision.md.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-05] Write Section 1: predictive task framing" for Waleed to review. Do not mark anything done that you did not verify.
 ```
 
@@ -271,6 +279,7 @@ Steps:
 5. After every plot: a 1 to 2 sentence takeaway ending with "-> motivates ..." naming a modeling choice.
 Verify: restart kernel and run all with no errors; every plot has a takeaway; no test-set data used.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-06] EDA: dataset context, stats tables, plots" for Aditya to review. Do not mark anything done that you did not verify.
 ```
 
@@ -288,6 +297,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 Read AGENTS.md and HANDOFF.md first, then this issue (I-07) in ISSUES.md. Follow their rules exactly.
 Branch: i07-preprocess from up-to-date main. Commit messages: "[I-07] ...".
 
+Tests first: before writing any implementation, add tests for this issue's acceptance criteria under tests/unit/test_preprocess.py (statistics fitted on train only, row counts per step), run them and confirm they FAIL, and commit them alone as "[I-07] add failing tests". Then implement until they pass.
 Task: implement and document preprocessing.
 Steps:
 1. In src/data.py add preprocess(train, valid, test) that applies every cleaning/filtering/feature step. Fit any statistics (means, vocabularies, encoders) on train only and apply to valid/test.
@@ -295,6 +305,7 @@ Steps:
 3. Note anything the dataset authors already preprocessed.
 Verify: a cell asserts row counts match the table; grep src/data.py shows no fit on valid/test; restart and run all passes.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-07] Document preprocessing pipeline" for Aditya to review. Do not mark anything done that you did not verify.
 ```
 
@@ -311,6 +322,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 Read AGENTS.md and HANDOFF.md first, then this issue (I-08) in ISSUES.md. Follow their rules exactly.
 Branch: i08-baselines from up-to-date main. Commit messages: "[I-08] ...".
 
+Tests first: before writing any implementation, add tests for this issue's acceptance criteria under tests/unit/test_metrics.py (hand-computed values) and tests/unit/test_models.py (fit/predict shapes, baseline output), run them and confirm they FAIL, and commit them alone as "[I-08] add failing tests". Then implement until they pass.
 Task: trivial baselines plus the shared metric code.
 Steps:
 1. src/metrics.py: implement the primary and secondary metrics from docs/decision.md as plain functions (y_true, y_pred) -> float, with docstrings. Add a tiny self-check under if __name__ == "__main__" using hand-computed examples.
@@ -318,6 +330,7 @@ Steps:
 3. notebooks/03_models.ipynb: load via src.data, fit on train, score on valid, show a one-row results table.
 Verify (paste in PR): python -m src.metrics passes; notebook restart-and-run-all passes; validation score printed.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-08] Implement trivial baselines" for Waleed to review. Do not mark anything done that you did not verify.
 ```
 
@@ -335,6 +348,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 Read AGENTS.md and HANDOFF.md first, then this issue (I-09) in ISSUES.md. Follow their rules exactly.
 Branch: i09-course-model from up-to-date main. Commit messages: "[I-09] ...".
 
+Tests first: before writing any implementation, add tests for this issue's acceptance criteria under tests/unit/test_models.py (fit/predict shapes, beats a constant predictor on a tiny synthetic example), run them and confirm they FAIL, and commit them alone as "[I-09] add failing tests". Then implement until they pass.
 Task: implement the course-model baseline named in docs/decision.md.
 Steps:
 1. Add it to src/models.py with the same fit/predict interface (e.g. latent factor model with user/item biases, Jaccard or cosine similarity recommender, or logistic/linear regression on engineered features).
@@ -342,6 +356,7 @@ Steps:
 3. If it does not beat the trivial baseline, say so and give a likely reason. Do not tune on test.
 Verify: restart-and-run-all passes; results table has both rows; objective is written out.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-09] Implement course-model baseline" for Waleed to review. Do not mark anything done that you did not verify.
 ```
 
@@ -359,6 +374,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 Read AGENTS.md and HANDOFF.md first, then this issue (I-10) in ISSUES.md. Follow their rules exactly.
 Branch: i10-main-model from up-to-date main. Commit messages: "[I-10] ...".
 
+Tests first: before writing any implementation, add tests for this issue's acceptance criteria under tests/unit/test_models.py (fit/predict shapes, deterministic with a fixed seed), run them and confirm they FAIL, and commit them alone as "[I-10] add failing tests". Then implement until they pass.
 Task: implement the main model from docs/decision.md.
 Steps:
 1. Add it to src/models.py with the shared interface. Keep the code readable; comment each architectural choice.
@@ -366,6 +382,7 @@ Steps:
 3. Score on valid and add to the results table.
 Verify: restart-and-run-all passes; training time shown; comparison table present.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-10] Implement main model + features" for Waleed to review. Do not mark anything done that you did not verify.
 ```
 
@@ -390,6 +407,7 @@ Steps:
 3. Record the chosen values as constants at the top of the notebook section and in HANDOFF.md section 5.
 Verify: no call touches the test split (grep for test in the section); restart-and-run-all passes.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-11] Tune hyperparameters on validation set" for Waleed to review. Do not mark anything done that you did not verify.
 ```
 
@@ -407,6 +425,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 Read AGENTS.md and HANDOFF.md first, then this issue (I-12) in ISSUES.md. Follow their rules exactly.
 Branch: i12-eval from up-to-date main. Commit messages: "[I-12] ...".
 
+Tests first: before writing any implementation, add tests for this issue's acceptance criteria under tests/integration/test_pipeline.py (every model trains and is scored on the fixture data via src/metrics.py), run them and confirm they FAIL, and commit them alone as "[I-12] add failing tests". Then implement until they pass.
 Task: final evaluation protocol on the test set, run once.
 Steps:
 1. notebooks/04_eval.ipynb: load splits via src.data, retrain each model (trivial, course, main with tuned values) on train (or train+valid, state which), predict test.
@@ -415,6 +434,7 @@ Steps:
 4. One paragraph: does the main model beat both baselines, by how much, and is the gap larger than the uncertainty.
 Verify: restart-and-run-all reproduces the same table twice; every number comes from src/metrics.py.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-12] Evaluation harness + results table on test" for Waleed to review. Do not mark anything done that you did not verify.
 ```
 
@@ -439,6 +459,7 @@ Steps:
 3. Explain any negative or surprising results honestly.
 Verify: restart-and-run-all passes; each plot has a 1 to 2 sentence takeaway.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-13] Result plots, error analysis, metric justification" for Waleed to review. Do not mark anything done that you did not verify.
 ```
 
@@ -464,6 +485,7 @@ Steps:
 Do not: invent citations, quote more than a short phrase, or copy abstracts. If a number cannot be confirmed from the source, leave it out.
 Verify: every link opened successfully (list them in the PR with the page title you saw).
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-14] Related-work research notes with citations" for Waleed to review. Do not mark anything done that you did not verify.
 ```
 
@@ -487,6 +509,7 @@ Steps:
 3. Add both to the Section 5 cells of notebooks/04_eval.ipynb (they move into workbook.ipynb in I-16).
 Verify: every number in the table traces to a cited source or to the I-12 output.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-15] Compare our results to reported results" for Waleed to review. Do not mark anything done that you did not verify.
 ```
 
@@ -513,8 +536,9 @@ Steps:
 3. Add a short intro cell (what we predict, the dataset, the headline result) and a markdown cell before and after every code cell.
 4. Remove debug cells, long raw outputs, and warning spam (fix warnings, do not just hide them).
 5. Commit workbook.ipynb with outputs (the one exception to clearing outputs).
-Verify: jupyter nbconvert --to notebook --execute --inplace workbook.ipynb finishes with no errors; list every number planned for the slides with its section.
+Verify: jupyter nbconvert --to notebook --execute --inplace workbook.ipynb finishes with no errors; pytest tests/e2e passes (it already exists and enforces the 5 headings, no error outputs, embedded plots); list every number planned for the slides with its section.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-16] Assemble and narrate `workbook.ipynb`" for Aditya to review. Do not mark anything done that you did not verify.
 ```
 
@@ -538,6 +562,7 @@ Steps:
 2. Run it and commit workbook.html.
 Verify (paste in PR): head -c 15 workbook.html prints <!DOCTYPE html>; open it in a browser and confirm all plots render; file size is reasonable (under about 10 MB).
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-17] Execute + export `workbook.html`" for Aditya to review. Do not mark anything done that you did not verify.
 ```
 
@@ -555,6 +580,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 Read AGENTS.md and HANDOFF.md first, then this issue (I-18) in ISSUES.md. Follow their rules exactly.
 Branch: i18-checker from up-to-date main. Commit messages: "[I-18] ...".
 
+Tests first: before writing any implementation, add tests for this issue's acceptance criteria under tests/unit/test_check_submission.py (HTML prefix check, Drive ID parsing, <1 MB and non-MP4 rejection; fake the network, never call Google), run them and confirm they FAIL, and commit them alone as "[I-18] add failing tests". Then implement until they pass.
 Task: a local copy of the course autograder checks in scripts/check_submission.py.
 Steps:
 1. Read the "How your submission is verified" part of docs/requirements.md (or docs/spec.pdf).
@@ -562,6 +588,7 @@ Steps:
 3. Clear pass/fail messages; exit code 0 only if everything passes. Usage in README.md.
 Verify: test with (a) a renamed .ipynb as workbook.html -> fails, (b) a Drive URL without an ID -> fails, (c) a real nbconvert HTML -> passes the HTML check. Paste outputs in PR.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-18] Local submission checker script" for Aditya to review. Do not mark anything done that you did not verify.
 ```
 
@@ -587,6 +614,7 @@ Helper prompt for the agent (checks only):
 "From workbook.html, list every number, table and plot title by section with the cell it comes from, as a checklist in slides/numbers.md. Then compare against slides/ (exported text) and list any number on a slide that does not match the notebook. Do not write or rewrite any slide text."
 Plan the timing so the total is 18 to 22 minutes, in the same order as the notebook sections.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-19] Build slide deck (human-written wording)" for the other person to review. Do not mark anything done that you did not verify.
 ```
 
@@ -612,6 +640,7 @@ Helper prompt for the agent (file checks only):
 "Run ffprobe on the recorded file and report duration, container, video codec, audio codec and resolution. If it is not H.264/AAC MP4, give me the single ffmpeg command to convert it (libx264, -preset veryfast, aac) and nothing else."
 Done when: 18 to 22 minutes, H.264/AAC MP4, plays in a browser and in QuickTime, code readable at 1080p, audio clear.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-20] Record and edit ~20-min MP4 video" for the other person to review. Do not mark anything done that you did not verify.
 ```
 
@@ -640,6 +669,7 @@ Steps for Waleed:
 6. Confirm the Gradescope autograder passes. Target: at least 1 day before the deadline.
 Helper prompt for the agent: "Run python scripts/check_submission.py and explain any failure in one line each."
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-21] Upload video, write `video_url.txt`, submit" for Aditya to review. Do not mark anything done that you did not verify.
 ```
 
@@ -662,5 +692,32 @@ Each of us does this separately once peer assignments are released (week 11). Wo
 3. Fill in responses.txt in the required format and re-upload; confirm the format check passes.
 No agent prompt: reviews are written by you.
 
+If you changed any code, notebook or test, `bash scripts/check.sh` must pass (it runs the same stages as CI); paste its last lines in the PR.
 Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-22] Complete peer grading (each member)" for the other person to review. Do not mark anything done that you did not verify.
+```
+
+### I-23 · Set up CI pipeline (format, lint, audit, tests)
+**Labels:** `type:setup` `area:infra` `P0` `status:review` `owner:agent-ok` `Order 2` `Waleed`
+**Context & Scope:** `.github/workflows/ci.yml` runs 6 stages in order, each only if the previous passed: 1 `ruff format --check`, 2 `ruff check`, 3 `pip-audit -r requirements-dev.txt`, 4 `pytest tests/unit` (+ coverage, informational), 5 `pytest tests/integration` + `nbmake` on `notebooks/`, 6 `pytest tests/e2e` (executes `workbook.ipynb` on `tests/fixtures` and checks the exported HTML). Python 3.12. `scripts/check.sh` runs the same stages locally. `.github/dependabot.yml` opens weekly dependency update PRs. No browser tests: there is no web app.
+**Acceptance Criteria:**
+- [x] `ci.yml` with the 6 stages chained via `needs`
+- [x] `scripts/check.sh` runs the same stages locally and passes on Python 3.12
+- [x] Unit tests for the issue scripts; e2e test skips until `workbook.ipynb` exists, then enforces headings, no errors, embedded plots
+- [ ] CI is green on GitHub for the PR
+- [ ] `main` branch rule requires CI to pass before merging (Waleed: Settings, Branches)
+**Dependencies:** I-01
+
+**Agent prompt** (paste into your coding agent):
+```text
+Read AGENTS.md and HANDOFF.md first, then this issue (I-23) in ISSUES.md. Follow their rules exactly.
+Branch: i23-ci from up-to-date main. Commit messages: "[I-23] ...".
+
+Task: keep the CI pipeline working. Only change .github/workflows/ci.yml, .github/dependabot.yml, scripts/check.sh, pyproject.toml or tests/ as the fix requires.
+Steps:
+1. Run bash scripts/check.sh and read the first failing stage.
+2. Fix the cause, not the check: do not loosen ruff rules, skip tests, or ignore audit findings without writing the reason in HANDOFF.md section 5.
+3. If a dependency has a vulnerability, bump its pin to the fixed version that supports Python 3.12 and rerun the full check.
+Verify: bash scripts/check.sh passes locally and the CI run on the PR is green.
+
+Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated entry to HANDOFF.md section 5 (what you did, what is left, exact next step), push, and open a PR titled "[I-23] Set up CI pipeline (format, lint, audit, tests)" for Aditya to review. Do not mark anything done that you did not verify.
 ```

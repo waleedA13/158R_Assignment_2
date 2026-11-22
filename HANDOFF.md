@@ -90,13 +90,14 @@ _Last updated: 2026-11-22 (setup complete, ready to start issues) · Repo state:
 - All metrics come from `src/metrics.py`. Report numbers only from code that's in the repo.
 - Every number shown in slides must appear in `workbook.html`.
 
-**Commands (valid once I-01/I-17/I-18 land)**
+**Commands**
 ```bash
-pip install -r requirements.txt
-jupyter nbconvert --to notebook --execute --inplace workbook.ipynb   # must run clean top-to-bottom
-bash scripts/export.sh                                               # -> workbook.html
-python scripts/check_submission.py                                   # local autograder
+pip install -r requirements-dev.txt     # inside a Python 3.12 venv
+bash scripts/check.sh                   # same 6 stages as CI; must pass before every push
+bash scripts/export.sh                  # -> workbook.html (after I-17)
+python scripts/check_submission.py      # local autograder (after I-18)
 ```
+**CI** (`.github/workflows/ci.yml`, I-23): 1 format, 2 lint, 3 dependency audit, 4 unit, 5 integration + notebooks, 6 e2e workbook HTML. Each stage runs only if the previous passed. Code issues are test-first.
 
 **Agent-specific rules** (full list in `AGENTS.md`)
 - Each issue ends with an **Agent prompt**: paste it into your coding agent. Prompts start with "Read AGENTS.md and HANDOFF.md first".
@@ -117,6 +118,8 @@ python scripts/check_submission.py                                   # local aut
 | 🧱 Critical path | I-03 → I-04 → I-08 → I-09/I-10 → I-12 → I-16 → I-17 → I-19 → I-20 → I-21 |
 
 ## 5. Session Log & Open Notes (append newest on top)
+
+- **2026-11-22 · agent (I-23):** CI on `i23-ci` (stacked on `i01-scaffold`): `ci.yml` with 6 chained stages, `scripts/check.sh`, Dependabot, unit tests for the issue scripts, integration smoke test, e2e workbook HTML test (skips until I-16; verified it passes on a good export and fails on an error cell). All stages pass on Python 3.12. Added I-23 to ISSUES.md and a tests-first step to the prompts of I-04, I-07 to I-10, I-12, I-18; I-04 now defines `DATA_DIR` + `tests/fixtures/`. `sync_issues.py` can now create new issues. Next: Waleed pushes, opens PRs, runs `sync_issues.py` after merge, adds the branch rule.
 
 - **2026-11-22 · agent (I-01):** Scaffold on `i01-scaffold`: folders incl. `tests/{unit,integration,e2e,fixtures}`, `src/` stubs, `.gitignore`, `pyproject.toml` (ruff + pytest config), pinned `requirements.txt` / `requirements-dev.txt` for **Python 3.12** (`.python-version`), README setup. Verified: fresh 3.12 install, `pip-audit` clean, ruff format + lint pass, src imports, `data/` ignored. Also reformatted `scripts/*.py` to pass ruff. Next: I-23 CI.
 
