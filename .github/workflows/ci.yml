@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  format:
+    name: 1 Formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: pip install "$(grep '^ruff==' requirements-dev.txt)"
+      - run: ruff format --check .
+
+  lint:
+    name: 2 Linting
+    needs: format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: pip install "$(grep '^ruff==' requirements-dev.txt)"
+      - run: ruff check .
+
+  audit:
+    name: 3 Security audit (dependencies)
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: pip install "$(grep '^pip-audit==' requirements-dev.txt)"
+      - run: pip-audit -r requirements-dev.txt
+
+  unit:
+    name: 4 Unit tests
+    needs: audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - run: pip install -r requirements-dev.txt
+      - run: pytest tests/unit --cov --cov-report=term-missing
+
+  integration:
+    name: 5 Integration tests
+    needs: unit
+    runs-on: ubuntu-latest
+    env:
+      DATA_DIR: tests/fixtures
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - run: pip install -r requirements-dev.txt
+      - run: pytest tests/integration
+      - name: Run draft notebooks end to end (nbmake)
+        run: |
+          if ls notebooks/*.ipynb >/dev/null 2>&1; then pytest --nbmake notebooks/; else echo "No notebooks yet"; fi
+
+  e2e:
+    name: 6 End-to-end (workbook HTML)
+    needs: integration
+    runs-on: ubuntu-latest
+    env:
+      DATA_DIR: tests/fixtures
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - run: pip install -r requirements-dev.txt
+      - run: pytest tests/e2e

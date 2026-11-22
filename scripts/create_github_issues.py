@@ -67,6 +67,7 @@ PART_OF = {
     "I-20": 4,
     "I-21": 4,
     "I-22": 5,
+    "I-23": 0,
 }
 
 ORDER_COLORS = [
@@ -150,7 +151,9 @@ def main():
     if not aditya_ok:
         print("Note: Aditya is not a collaborator yet, so his issues will be labelled but unassigned.")
     issues = parse_issues()
-    assert len(issues) == 22, f"expected 22 issues in ISSUES.md, found {len(issues)}"
+    assert [i["id"] for i in issues] == [f"I-{n:02d}" for n in range(1, len(issues) + 1)], (
+        "issue IDs must be I-01.. in order"
+    )
 
     if a.invite:
         print("== Inviting Aditya")

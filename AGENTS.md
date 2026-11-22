@@ -14,6 +14,8 @@ Every agent prompt in the GitHub issues starts with "Read AGENTS.md and HANDOFF.
 - **Stay in scope:** only touch files your issue names. Never edit a notebook owned by the other person.
 - **One split, one metric module:** always use `src/data.split()` and `src/metrics.py`. Never touch the test set outside I-12/I-13.
 - **No invented facts:** no made-up results, numbers, dataset details or citations. Every number must come from code in this repo.
+- **Tests first:** for any code issue, write the tests for its acceptance criteria first, confirm they fail, commit them alone, then implement until they pass.
+- **CI must stay green:** run `bash scripts/check.sh` before every push. Fix causes; never loosen ruff rules, skip tests or ignore audit findings without a written reason in HANDOFF.md.
 - **Human-only work:** issues labelled `owner:human` (slides wording, video narration, peer grading, uploads) are written and done by people. Agents may only check numbers or run tooling for them. The rubric scores auto-generated presentations 1/5.
 
 ## Workflow
@@ -23,13 +25,16 @@ Every agent prompt in the GitHub issues starts with "Read AGENTS.md and HANDOFF.
 - Verify before saying done: run the commands in the issue's prompt and paste their output in the PR.
 - End of session: follow the checklist in `HANDOFF.md` section 6.
 
-## Commands (valid once I-01, I-17, I-18 are merged)
+## Commands
 ```bash
-pip install -r requirements.txt
-jupyter nbconvert --to notebook --execute --inplace workbook.ipynb
-bash scripts/export.sh
-python scripts/check_submission.py
+python3.12 -m venv .venv && source .venv/bin/activate   # Python 3.12 only
+pip install -r requirements-dev.txt
+bash scripts/check.sh          # format, lint, audit, unit, integration, e2e (same as CI)
+# once they exist:
+bash scripts/export.sh         # workbook.ipynb -> workbook.html (I-17)
+python scripts/check_submission.py   # local autograder (I-18)
 ```
+CI runs on every PR to `main` (`.github/workflows/ci.yml`). Tests run on the small sample in `tests/fixtures/` via `DATA_DIR`, never on the real data.
 
 ## Team
 | Person | GitHub | Owns |

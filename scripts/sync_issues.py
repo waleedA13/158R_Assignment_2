@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Update the existing GitHub issues in place so they match ISSUES.md. Never deletes or creates issues.
+"""Make the GitHub issues match ISSUES.md: edits existing ones in place, creates new IDs, never deletes.
 Run on your own machine (your gh login) from the repo root:
     python3 scripts/sync_issues.py --dry-run
     python3 scripts/sync_issues.py
@@ -18,6 +18,7 @@ from create_github_issues import (
     ORDER_COLORS,
     PART_OF,
     PARTS,
+    PEOPLE,
     PREFIX_COLOR,
     R,
     api,
@@ -72,7 +73,21 @@ def main():
     for iss in issues:
         g = gh.get(iss["id"])
         if not g:
-            print(f"  {iss['id']}: not on GitHub, skipped")
+            who = [PEOPLE[p] for p in ("Waleed", "Aditya") if p in iss["labels"]]
+            payload = {
+                "title": f"[{iss['id']}] {iss['title']}",
+                "body": link_ids(iss["body"], num),
+                "labels": iss["labels"],
+                "milestone": ms[PARTS[PART_OF[iss["id"]]][0]]["number"],
+                "assignees": who,
+            }
+            print(f"  {iss['id']}: new, creating")
+            r = api("POST", f"{R}/issues", payload, dry, allow_fail=True)
+            if "_error" in r:  # usually an assignee who is not a collaborator yet
+                payload["assignees"] = [u for u in who if u == PEOPLE["Waleed"]]
+                r = api("POST", f"{R}/issues", payload, dry)
+            num[iss["id"]] = r.get("number", 0)
+            changed += 1
             continue
         current = [lab["name"] for lab in g["labels"]]
         status = [lab for lab in current if lab.startswith("status:")] or [
