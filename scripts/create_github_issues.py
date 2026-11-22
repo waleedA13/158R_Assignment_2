@@ -18,17 +18,18 @@ REPO = "waleedA13/158R_Assignment_2"
 R = f"repos/{REPO}"
 PEOPLE = {"Waleed": "waleedA13", "Aditya": "AdityaJadhav17"}
 
-PARTS = [
+PARTS = [  # (title, due date, description). Titles must stay the same so existing milestones are reused.
     ("Part 1: Setup and decision", "2026-11-22", "Repo scaffold, spec, checker, dataset/task decision."),
     ("Part 2: Data and task", "2026-11-24", "Shared split, task framing, EDA, preprocessing, related-work notes."),
-    ("Part 3: Models and evaluation", "2026-11-26", "Baselines, models, tuning, test evaluation, comparison to literature."),
-    ("Part 4: Notebook", "2026-11-27", "Assemble, run clean, export workbook.html. Notebook frozen."),
-    ("Part 5: Presentation and submission", "2026-11-30", "Slides, video, upload, Gradescope submission."),
+    ("Part 3: Models and evaluation", "2026-11-25", "Baselines, course model, main model, test evaluation."),
+    ("Part 4: Notebook", "2026-11-27", "Error analysis, comparison to literature, tuning if on track; assemble and export workbook. Notebook frozen Fri evening."),
+    ("Part 5: Presentation and submission", "2026-11-30", "Slides from Wed 11-25, rehearse Sat, record Sun, submit Mon."),
     ("Part 6: Peer grading", "2026-12-08", "Each member completes peer grading (week 11)."),
 ]
 PART_OF = {"I-01": 0, "I-02": 0, "I-03": 0, "I-18": 0, "I-04": 1, "I-05": 1, "I-06": 1, "I-07": 1, "I-14": 1,
-           "I-08": 2, "I-09": 2, "I-10": 2, "I-11": 2, "I-12": 2, "I-13": 2, "I-15": 2,
-           "I-16": 3, "I-17": 3, "I-19": 4, "I-20": 4, "I-21": 4, "I-22": 5}
+           "I-08": 2, "I-09": 2, "I-10": 2, "I-12": 2,
+           "I-11": 3, "I-13": 3, "I-15": 3, "I-16": 3, "I-17": 3,
+           "I-19": 4, "I-20": 4, "I-21": 4, "I-22": 5}
 
 ORDER_COLORS = ["0e8a16", "2c9a2c", "4aa43f", "6aae52", "8ab865", "a9c278", "c8cc8b", "e0c77a", "e8b060", "ef9946", "f6822c"]
 LABEL_STYLE = {  # name: (color, description) used only when a label has to be created
@@ -120,9 +121,9 @@ def main():
         if title not in ms:
             print(f"  create milestone {title}")
             ms[title] = api("POST", f"{R}/milestones", {"title": title, "due_on": f"{due}T23:59:00Z", "description": desc}, dry) or {"number": 0}
-        elif FOOTER.search(ms[title].get("description") or ""):
-            print(f"  clean footer: {title}")
-            api("PATCH", f"{R}/milestones/{ms[title]['number']}", {"description": desc}, dry)
+        elif (ms[title].get("description") or "") != desc or (ms[title].get("due_on") or "")[:10] != due:
+            print(f"  update milestone: {title} (due {due})")
+            api("PATCH", f"{R}/milestones/{ms[title]['number']}", {"description": desc, "due_on": f"{due}T23:59:00Z"}, dry)
 
     old = [i for i in api("GET", f"{R}/issues?state=all&per_page=100")
            if "pull_request" not in i and i["title"].startswith("[I-")]

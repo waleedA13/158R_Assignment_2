@@ -11,16 +11,17 @@ _Last updated: 2026-11-21 (agent prompts + rebuild script) · Repo state at that
 
 | # | Assumption | Why it matters | Confirm with |
 |---|---|---|---|
-| A1 | **Submission due Tue of week 10 ≈ Tue 2026-12-01** (UCSD Fall '26). Peer grading due in week 11. | Drives every deadline below | Gradescope |
+| A1 | **Submission due Tue 2026-12-01** (Tuesday of week 10: UCSD Fall '26 instruction began Thu Sep 24). Exact time not yet checked. Peer grading due in week 11. | Drives every deadline below | Gradescope (time of day) |
+| A9 | **Thanksgiving Thu to Fri, Nov 26 to 27.** Planned as buffer days, not work days | Schedule in ISSUES.md "Day-by-day plan" | Team |
 | A2 | **Late submissions not accepted** (OSD-only late window) | No slack, so the internal freeze is 2 days early | Spec |
 | A3 | **Team of 2:** Waleed (`waleedA13`) and Aditya (`AdityaJadhav17`, not yet a collaborator) | Aditya's issues are assigned once he accepts the invite (`scripts/assign_aditya.py`) | Team |
 | A4 | **No dataset or predictive task chosen yet** | Blocks almost everything (I-03) | Team |
 | A5 | Stack: Python 3 + Jupyter, pandas/numpy/scikit-learn/matplotlib (course-standard). Nothing installed in repo yet | Proposed layout in §2 | I-01 |
 | A6 | Spec PDF lives *outside* this repo at `../Assignment 2/158 _ 258 2026 Assignment 2.pdf` | Agents can't see it unless copied in | I-02 |
-| A7 | GitHub issues are the live tracker, titled `[I-NN] ...`. `docs/github_issue_map.md` maps IDs to issue numbers. Rebuild with `scripts/create_github_issues.py` (run on your own machine only) | Find work by I-NN | Repo owner |
+| A7 | GitHub issues are the live tracker, titled `[I-NN] ...`. `docs/github_issue_map.md` maps IDs to issue numbers. Issues are #23 to #44. After editing ISSUES.md, run `scripts/sync_issues.py` (updates in place); `create_github_issues.py` is only for a full rebuild. Run both on your own machine only | Find work by I-NN | Repo owner |
 | A8 | Work split Waleed/Aditya (see ISSUES.md "Parts and roles"), tracked by `Waleed` / `Aditya` labels | Filter by label to see your queue | Team |
 
-**Internal milestones (from A1):** Sun 11-22 decision locked · Wed 11-25 models + eval done · Fri 11-27 notebook frozen · Sun 11-29 video recorded · **Mon 11-30 submitted** (1-day buffer).
+**Internal milestones:** Sun 11-22 decision locked · Wed 11-25 models + eval done, slides started · Fri 11-27 notebook frozen · Sat 11-28 slides done + 2 rehearsals · Sun 11-29 video recorded · **Mon 11-30 submitted** (Tue 12-01 spare). Full day-by-day plan and talk time budget: ISSUES.md "Parts and roles".
 
 ---
 
@@ -115,6 +116,10 @@ python scripts/check_submission.py                                   # local aut
 | 🧱 Critical path | I-03 → I-04 → I-08 → I-09/I-10 → I-12 → I-16 → I-17 → I-19 → I-20 → I-21 |
 
 ## 5. Session Log & Open Notes (append newest on top)
+
+- **2026-11-22 · agent:** Rebuild done: issues #23 to #44, prompts present, no footers, no app tag. They predate the schedule fix, so added `scripts/sync_issues.py`; dry run shows 7 issues + 3 milestones to update. Aditya still not a collaborator (9 issues unassigned).
+
+- **2026-11-22 · agent:** Checked plan against the spec and UCSD calendar. Deadline confirmed as Tue 12-01; Thanksgiving 11-26/27 made buffer. Slides (I-19) now start Wed 11-25 (Order 3); presentation gets about 3 days. I-07, I-13, I-15 raised to P0 (spec requires them). Added day-by-day plan and talk time budget to ISSUES.md. I-11, I-13, I-15 moved to Part 4. Not yet on GitHub: Waleed must run `scripts/create_github_issues.py`.
 
 - **2026-11-21 · agent:** Added `AGENTS.md` (shared instructions, replaces any other agent file). Every issue in ISSUES.md now has an agent prompt; labels are `P0`/`P1`, `Order N`, `Waleed`/`Aditya`. `scripts/create_github_issues.py` now deletes the old issues and recreates them from Waleed's machine; `scripts/assign_aditya.py` assigns Aditya after he accepts the invite. Next: Waleed runs both scripts.
 

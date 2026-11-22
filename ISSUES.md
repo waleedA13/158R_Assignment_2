@@ -19,16 +19,46 @@ Every issue below ends with an **Agent prompt**: paste it into your coding agent
 
 ## Parts (GitHub milestones) and roles
 
-Work in part order. Due dates assume the Tue 2026-12-01 deadline (HANDOFF A1).
+Deadline: **Tue 2026-12-01** (Tuesday of week 10; UCSD instruction began Thu Sep 24). Thanksgiving is **Thu to Fri, Nov 26 to 27**: treat those days as buffer, not planned work. Check the exact submission time on Gradescope.
 
 | Part | Due | Issues |
 |---|---|---|
 | 1 Setup and decision | Sun 11-22 | I-01, I-02, I-03, I-18 |
 | 2 Data and task | Tue 11-24 | I-04, I-05, I-06, I-07, I-14 |
-| 3 Models and evaluation | Thu 11-26 | I-08, I-09, I-10, I-11, I-12, I-13, I-15 |
-| 4 Notebook | Fri 11-27 | I-16, I-17 |
-| 5 Presentation and submission | Mon 11-30 | I-19, I-20, I-21 |
+| 3 Models and evaluation | Wed 11-25 | I-08, I-09, I-10, I-12 |
+| 4 Analysis and notebook | Fri 11-27 | I-11, I-13, I-15, I-16, I-17 |
+| 5 Presentation and submission | Mon 11-30 | I-19 (starts Wed 11-25), I-20, I-21 |
 | 6 Peer grading | week 11 | I-22 |
+
+### Day-by-day plan
+
+| Day | Waleed | Aditya |
+|---|---|---|
+| Sun 11-22 | I-01, I-02, I-18 · I-03 with Aditya | I-03 with Waleed |
+| Mon 11-23 | I-04 split | I-05 task framing, I-14 related work |
+| Tue 11-24 | I-06 EDA, I-07 preprocessing | I-08 baselines, I-09 course model |
+| Wed 11-25 | I-16 notebook skeleton (Sections 1, 2, 5 in) · I-19 slide template + intro, S1, S2 slides | I-10 main model, I-12 test evaluation |
+| Thu 11-26 | Thanksgiving: buffer | Thanksgiving: buffer |
+| Fri 11-27 | I-16 assemble + I-17 export: **notebook frozen by evening** | I-13 metric/error analysis, I-15 comparison (morning) · I-11 only if on track · S3, S4, S5 slides |
+| Sat 11-28 | Finish slides · numbers check vs `workbook.html` · **2 timed rehearsals together** | same |
+| Sun 11-29 | I-20 record + convert + check | I-20 record |
+| Mon 11-30 | I-21 upload, run checker, **submit** | confirm on Gradescope |
+| Tue 12-01 | Deadline. Spare day only, no planned work | |
+
+**Presentation gets about 3 days** (Wed draft, Fri to Sat finish and rehearse, Sun record). If anything slips, cut in this order: I-11 tuning (use defaults), extra plots in I-13, I-10 (present the course model as the main model). Never cut rehearsal or recording time.
+
+### Talk time budget (target 20 min, hard max 22)
+
+| Segment | Speaker | Minutes | Must show |
+|---|---|---|---|
+| Intro | Waleed | 1 | task in one sentence, dataset, headline result |
+| S1 Predictive task | Waleed | 3 | task, metrics, baselines, how validity is checked |
+| S2 Data and EDA | Waleed | 4 | dataset origin, preprocessing steps, 2 to 3 key plots, code walkthrough |
+| S3 Modeling | Aditya | 5 | ML formulation (inputs, outputs, objective), tradeoffs between approaches, code walkthrough |
+| S4 Evaluation | Aditya | 5 | why these metrics, results table vs baselines, uncertainty, code walkthrough |
+| S5 Related work | Aditya | 2 | prior use of the dataset, prior approaches, how our numbers compare |
+
+Every section needs all three spec parts (context, discussion, code), or graders cap it at 2/5.
 
 | Owner | GitHub | Owns | Issues |
 |---|---|---|---|
@@ -48,19 +78,19 @@ Aditya can start I-14 (related work) and I-05 (task framing) right after I-03 is
 | 2 | I-04 | Shared data loader + fixed split in `src/data.py` | P0 | agent-ok | I-01, I-03 | blocked |
 | 2 | I-05 | Write Section 1: predictive task framing | P0 | agent-ok | I-03 | blocked |
 | 3 | I-06 | EDA: dataset context, stats tables, plots | P0 | agent-ok | I-04 | blocked |
-| 3 | I-07 | Document preprocessing pipeline | P1 | agent-ok | I-04 | blocked |
+| 3 | I-07 | Document preprocessing pipeline | P0 | agent-ok | I-04 | blocked |
 | 3 | I-08 | Implement trivial baselines | P0 | agent-ok | I-04 | blocked |
 | 4 | I-09 | Implement course-model baseline | P0 | agent-ok | I-08 | blocked |
 | 5 | I-10 | Implement main model + features | P1 | agent-ok | I-09 | blocked |
 | 6 | I-11 | Tune hyperparameters on validation set | P1 | agent-ok | I-10 | blocked |
 | 5 | I-12 | Evaluation harness + results table on test | P0 | agent-ok | I-08, I-09 | blocked |
-| 6 | I-13 | Result plots, error analysis, metric justification | P1 | agent-ok | I-12 | blocked |
+| 6 | I-13 | Result plots, error analysis, metric justification | P0 | agent-ok | I-12 | blocked |
 | 2 | I-14 | Related-work research notes with citations | P0 | agent-ok | I-03 | blocked |
-| 6 | I-15 | Compare our results to reported results | P1 | agent-ok | I-12, I-14 | blocked |
+| 6 | I-15 | Compare our results to reported results | P0 | agent-ok | I-12, I-14 | blocked |
 | 7 | I-16 | Assemble and narrate `workbook.ipynb` | P0 | agent-ok | I-05 to I-15 | blocked |
 | 8 | I-17 | Execute + export `workbook.html` | P0 | agent-ok | I-16 | blocked |
 | 2 | I-18 | Local submission checker script | P1 | agent-ok | I-01 | ready |
-| 8 | I-19 | Build slide deck (human-written wording) | P0 | human | I-16 | blocked |
+| 3 | I-19 | Build slide deck (human-written wording) | P0 | human | I-05 (start), I-17 (final numbers) | blocked |
 | 9 | I-20 | Record and edit ~20-min MP4 video | P0 | human | I-17, I-19 | blocked |
 | 10 | I-21 | Upload video, write `video_url.txt`, submit | P0 | human | I-17, I-18, I-20 | blocked |
 | 11 | I-22 | Complete peer grading (each member) | P0 | human | I-21 + instructor release | blocked |
@@ -245,7 +275,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 ```
 
 ### I-07 · Document preprocessing pipeline
-**Labels:** `type:data` `area:s2-eda` `P1` `status:blocked` `owner:agent-ok` `Order 3` `Waleed`
+**Labels:** `type:data` `area:s2-eda` `P0` `status:blocked` `owner:agent-ok` `Order 3` `Waleed`
 **Context & Scope:** Filtering, cleaning, feature construction and encoding, in `src/data.py` with an explanation in `notebooks/02_eda.ipynb`. Note what was already preprocessed by the dataset authors.
 **Acceptance Criteria:**
 - [ ] Every transformation listed, with its rationale
@@ -389,7 +419,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 ```
 
 ### I-13 · Result plots, error analysis, metric justification
-**Labels:** `type:eval` `area:s4-eval` `P1` `status:blocked` `owner:agent-ok` `Order 6` `Aditya`
+**Labels:** `type:eval` `area:s4-eval` `P0` `status:blocked` `owner:agent-ok` `Order 6` `Aditya`
 **Context & Scope:** Explain why the chosen metrics fit better than alternatives; show where the model fails (by segment, by sparsity, etc.); explain any negative results.
 **Acceptance Criteria:**
 - [ ] Paragraph justifying metrics vs. ≥1 alternative
@@ -438,7 +468,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 ```
 
 ### I-15 · Compare our results to reported results
-**Labels:** `type:research` `area:s5-related` `P1` `status:blocked` `owner:agent-ok` `Order 6` `Aditya`
+**Labels:** `type:research` `area:s5-related` `P0` `status:blocked` `owner:agent-ok` `Order 6` `Aditya`
 **Context & Scope:** A short table and discussion: our numbers vs. the literature, and why they differ (data split, subset, metric definition).
 **Acceptance Criteria:**
 - [ ] Comparison table, with caveats on comparability
@@ -536,13 +566,15 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 ```
 
 ### I-19 · Build slide deck (human-written wording)
-**Labels:** `type:presentation` `area:video` `P0` `status:blocked` `owner:human` `Order 8` `Waleed` `Aditya`
+**Labels:** `type:presentation` `area:video` `P0` `status:blocked` `owner:human` `Order 3` `Waleed` `Aditya`
 **Context & Scope:** Slides for the 5 sections, planned to switch to code walkthroughs of `workbook.html`. Agents may make charts or check numbers against the notebook; humans write all slide text. The rubric gives 1/5 to presentations that look auto-generated.
 **Acceptance Criteria:**
-- [ ] One clearly titled block per section, in the same order as the notebook
-- [ ] Every number on a slide matches `workbook.html`
-- [ ] Timing plan adds up to 18 to 22 min
-**Dependencies:** I-16
+- [ ] Slide template made Wed 11-25; intro, S1, S2 drafted Wed; S3, S4, S5 drafted Fri 11-27
+- [ ] One clearly titled block per section, in the same order as the notebook, each with context, discussion and a code walkthrough
+- [ ] Every number on a slide matches `workbook.html` (checked after I-17)
+- [ ] Follows the talk time budget in "Parts and roles" (target 20 min, max 22)
+- [ ] Two full timed rehearsals done together on Sat 11-28
+**Dependencies:** I-05 to start drafting; I-17 for the final numbers check
 
 **Agent prompt** (paste into your coding agent):
 ```text
@@ -550,7 +582,7 @@ Read AGENTS.md and HANDOFF.md first, then this issue (I-19) in ISSUES.md. Follow
 Branch: i19-slides from up-to-date main. Commit messages: "[I-19] ...".
 
 This is human-only work (owner:human). The agent may only help with the checks below. It must not write slide text, narration, or reviews.
-Each person writes the slides for their own sections in their own words: Waleed for Sections 2 and the intro, Aditya for Sections 1, 3, 4, 5 (adjust between yourselves).
+Each person writes the slides for their own sections in their own words: Waleed for the intro, S1 and S2; Aditya for S3, S4 and S5 (see the talk time budget in ISSUES.md). Start Wed 11-25 with the sections that are already done; do not wait for the frozen notebook.
 Helper prompt for the agent (checks only):
 "From workbook.html, list every number, table and plot title by section with the cell it comes from, as a checklist in slides/numbers.md. Then compare against slides/ (exported text) and list any number on a slide that does not match the notebook. Do not write or rewrite any slide text."
 Plan the timing so the total is 18 to 22 minutes, in the same order as the notebook sections.
@@ -566,6 +598,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 - [ ] MP4, H.264/AAC, plays in a standard browser and in QuickTime
 - [ ] Audio is clear; code is readable at 1080p
 - [ ] Narration matches the notebook
+- [ ] Recorded Sun 11-29, leaving Mon 11-30 for upload and submit
 **Dependencies:** I-17, I-19
 
 **Agent prompt** (paste into your coding agent):
