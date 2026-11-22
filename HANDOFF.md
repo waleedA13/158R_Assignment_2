@@ -1,4 +1,4 @@
-# HANDOFF.md — 158R Assignment 2
+# HANDOFF.md: 158R Assignment 2
 
 > Single source of truth for every collaborator and every AI agent. Read this first; update it last (see §6).
 > Issue details live in [`ISSUES.md`](ISSUES.md).
@@ -7,12 +7,12 @@ _Last updated: 2026-11-21 by Claude (initial setup) · Repo state at that time: 
 
 ---
 
-## 0. Assumptions (verify — edit this list when confirmed)
+## 0. Assumptions (verify, then edit this list when confirmed)
 
 | # | Assumption | Why it matters | Confirm with |
 |---|---|---|---|
 | A1 | **Submission due Tue of week 10 ≈ Tue 2026-12-01** (UCSD Fall '26). Peer grading due in week 11. | Drives every deadline below | Gradescope |
-| A2 | **Late submissions not accepted** (OSD-only late window) | No slack — internal freeze is 2 days early | Spec |
+| A2 | **Late submissions not accepted** (OSD-only late window) | No slack, so the internal freeze is 2 days early | Spec |
 | A3 | Group size and members not yet known (max 4) | Owners in ISSUES.md are blank | Team |
 | A4 | **No dataset or predictive task chosen yet** | Blocks almost everything (I-03) | Team |
 | A5 | Stack: Python 3 + Jupyter, pandas/numpy/scikit-learn/matplotlib (course-standard). Nothing installed in repo yet | Proposed layout in §2 | I-01 |
@@ -26,16 +26,16 @@ _Last updated: 2026-11-21 by Claude (initial setup) · Repo state at that time: 
 ## 1. Project Snapshot
 
 - **What we're building:** a peer-graded ML project for CSE 158R: one predictive task on a dataset of our choice, delivered as
-  1. `workbook.html` — Jupyter notebook exported to HTML (graders read it, don't run it)
-  2. `video_url.txt` — one line: Google Drive ("anyone with link") or YouTube link to a **~20 min MP4** (≤ ~22 min)
+  1. `workbook.html`: Jupyter notebook exported to HTML (graders read it, don't run it)
+  2. `video_url.txt`: one line: Google Drive ("anyone with link") or YouTube link to a **~20 min MP4** (≤ ~22 min)
   3. Peer grading `responses.txt` (each student, ~1 week later)
-- **Grading:** 29 marks = 5 sections × 5 + 4 for peer grading. Video and notebook are graded **together** — what's said must match the code.
+- **Grading:** 29 marks = 5 sections × 5 + 4 for peer grading. Video and notebook are graded **together**, so what's said must match the code.
 - **The 5 graded sections:** (1) Predictive task · (2) EDA / data / preprocessing · (3) Modeling · (4) Evaluation · (5) Related work.
 - **Hard rule from the rubric:** a presentation that "seems to be automatically generated" scores **1/5**. Agents may draft code and analysis; **slides wording and narration are written and spoken by humans.**
 - **Current state:** nothing built. README is a title only. No code, data, deps, or branches.
 - **Key entry points (once built):** `workbook.ipynb` (final deliverable source) · `src/data.py` (shared loader + split) · `scripts/check_submission.py` (local autograder).
 
-## 2. Architecture & Key Paths (proposed — created by I-01)
+## 2. Architecture & Key Paths (proposed, created by I-01)
 
 ```
 158R_Assignment_2/
@@ -56,7 +56,7 @@ _Last updated: 2026-11-21 by Claude (initial setup) · Repo state at that time: 
 │   └── models.py           # baselines + models with a common fit/predict interface
 ├── notebooks/              # per-section DRAFT notebooks, one owner each
 │   ├── 01_task.ipynb  02_eda.ipynb  03_models.ipynb  04_eval.ipynb
-├── workbook.ipynb          # FINAL assembled notebook (I-16). Sections 1–5 as top-level headings
+├── workbook.ipynb          # FINAL assembled notebook (I-16). Sections 1 to 5 as top-level headings
 ├── workbook.html           # export of the above (submitted)
 ├── video_url.txt           # submitted
 ├── slides/                 # deck source/export (I-19)
@@ -72,8 +72,8 @@ _Last updated: 2026-11-21 by Claude (initial setup) · Repo state at that time: 
 
 **Claiming work**
 1. Pick an issue labelled `status:ready` with no open dependencies.
-2. Put your name/agent tag in its **Owner** field in `ISSUES.md` *and* set `status:in-progress` — commit that change alone, push it **before** starting. First push wins.
-3. One owner per issue. One owner per notebook file. Never edit a notebook you don't own — open a note in `HANDOFF.md §5` instead.
+2. Put your name/agent tag in its **Owner** field in `ISSUES.md` *and* set `status:in-progress`. Commit that change alone, push it **before** starting. First push wins.
+3. One owner per issue. One owner per notebook file. Never edit a notebook you don't own. Leave a note in `HANDOFF.md §5` instead.
 
 **Branches & commits**
 - Branch: `i<NN>-<short-slug>` → e.g. `i09-latent-factor`. Branch from up-to-date `main`.
@@ -98,28 +98,28 @@ python scripts/check_submission.py                                   # local aut
 **Agent-specific rules**
 - Ground claims in repo files; don't invent results, citations, or dataset facts. Cite related work with real links in `docs/related_work.md`.
 - Issues labelled `owner:human` (video, slides wording, peer grading, Gradescope upload, Drive sharing) are **off-limits to agents** except for checklists or tooling.
-- If blocked, set `status:blocked`, write why in §5, and stop — don't work around a team decision.
+- If blocked, set `status:blocked`, write why in §5, and stop. Don't work around a team decision.
 
 ## 4. Current Priorities & Active Work
 
 | State | Issues |
 |---|---|
 | ✅ Done | Repo created (`eacade8`). Spec breakdown + this plan (I-00). |
-| 🔄 In progress | — |
-| 🟢 Ready now | **I-01** scaffold · **I-02** copy spec in · **I-03** choose dataset + task (**top priority — blocks most work**) · **I-18** submission checker |
+| 🔄 In progress | none |
+| 🟢 Ready now | **I-01** scaffold · **I-02** copy spec in · **I-03** choose dataset + task (**top priority, blocks most work**) · **I-18** submission checker |
 | ⏳ Next after I-03 | I-04 loader/split → then I-05, I-06/07, I-08, I-14 can run **in parallel** |
 | 🧱 Critical path | I-03 → I-04 → I-08 → I-09/I-10 → I-12 → I-16 → I-17 → I-19 → I-20 → I-21 |
 
 ## 5. Session Log & Open Notes (append newest on top)
 
-- **2026-11-21 · Claude:** Inspected repo (README only, 1 commit, `main` only, no TODOs). Wrote `HANDOFF.md` + `ISSUES.md`. Nothing committed to git. Open: A1–A4 need human confirmation; issues not yet on GitHub.
+- **2026-11-21 · Claude:** Inspected repo (README only, 1 commit, `main` only, no TODOs). Wrote `HANDOFF.md` + `ISSUES.md`. Nothing committed to git. Open: A1 to A4 need human confirmation; issues not yet on GitHub.
 
 ## 6. Handoff Checklist (before ending ANY session)
 
 - [ ] Work committed on your `i<NN>-…` branch and pushed (or merged). No uncommitted notebook outputs in drafts.
 - [ ] `ISSUES.md`: your issue's `status:` label and acceptance-criteria checkboxes updated; Owner cleared if you're abandoning it.
 - [ ] `HANDOFF.md §4` table reflects reality (move issues between rows).
-- [ ] `HANDOFF.md §5`: one dated entry — what you did, what's half-done, exact next step, any new numbers produced (with the notebook cell they come from).
+- [ ] `HANDOFF.md §5`: one dated entry: what you did, what's half-done, exact next step, any new numbers produced (with the notebook cell they come from).
 - [ ] New assumptions or decisions added to §0 or `docs/decision.md`.
-- [ ] If you changed `src/` interfaces, split, or metrics: say so in §5 in **bold** — it affects everyone.
+- [ ] If you changed `src/` interfaces, split, or metrics: say so in §5 in **bold**, since it affects everyone.
 - [ ] `_Last updated_` line at the top bumped.

@@ -1,4 +1,4 @@
-# ISSUES.md — 158R Assignment 2 backlog
+# ISSUES.md: 158R Assignment 2 backlog
 
 Import-ready backlog. Each issue = one branch = one owner. Protocol and assumptions are in [`HANDOFF.md`](HANDOFF.md).
 Section numbers refer to the spec's 5 graded sections (5 marks each).
@@ -19,9 +19,9 @@ GitHub colors (optional): type=blue, area=purple, priority p0 red / p1 orange / 
 
 | ID | Title | Pri | Owner type | Depends on | Status |
 |---|---|---|---|---|---|
-| I-01 | Scaffold repo layout, deps, .gitignore | p0 | agent-ok | — | ready |
-| I-02 | Add assignment spec to `docs/` | p1 | agent-ok | — | ready |
-| I-03 | Decide dataset, predictive task, metric | p0 | human | — | ready |
+| I-01 | Scaffold repo layout, deps, .gitignore | p0 | agent-ok | none | ready |
+| I-02 | Add assignment spec to `docs/` | p1 | agent-ok | none | ready |
+| I-03 | Decide dataset, predictive task, metric | p0 | human | none | ready |
 | I-04 | Shared data loader + fixed split in `src/data.py` | p0 | agent-ok | I-01, I-03 | blocked |
 | I-05 | Write Section 1: predictive task framing | p0 | agent-ok | I-03 | blocked |
 | I-06 | EDA: dataset context, stats tables, plots | p0 | agent-ok | I-04 | blocked |
@@ -34,7 +34,7 @@ GitHub colors (optional): type=blue, area=purple, priority p0 red / p1 orange / 
 | I-13 | Result plots, error analysis, metric justification | p1 | agent-ok | I-12 | blocked |
 | I-14 | Related-work research notes with citations | p0 | agent-ok | I-03 | blocked |
 | I-15 | Compare our results to reported results | p1 | agent-ok | I-12, I-14 | blocked |
-| I-16 | Assemble and narrate `workbook.ipynb` | p0 | agent-ok | I-05–I-15 | blocked |
+| I-16 | Assemble and narrate `workbook.ipynb` | p0 | agent-ok | I-05 to I-15 | blocked |
 | I-17 | Execute + export `workbook.html` | p0 | agent-ok | I-16 | blocked |
 | I-18 | Local submission checker script | p1 | agent-ok | I-01 | ready |
 | I-19 | Build slide deck (human-written wording) | p0 | human | I-16 | blocked |
@@ -59,18 +59,18 @@ GitHub colors (optional): type=blue, area=purple, priority p0 red / p1 orange / 
 **Context & Scope:** The spec lives outside the repo (`../Assignment 2/158 _ 258 2026 Assignment 2.pdf`). Copy to `docs/spec.pdf` and add `docs/requirements.md` with the 5 sections and their bullets so agents can read it as text.
 **Acceptance Criteria:**
 - [ ] `docs/spec.pdf` committed
-- [ ] `docs/requirements.md` lists all 5 sections, the rubric (0–5), the submission files and the autograder checks
+- [ ] `docs/requirements.md` lists all 5 sections, the rubric (0 to 5), the submission files and the autograder checks
 **Dependencies:** none
 
 ### I-03 · Decide dataset, predictive task, metric
 **Labels:** `type:decision` `area:s1-task` `priority:p0` `status:ready` `owner:human`
-**Context & Scope:** Nothing is chosen. Pick a dataset (e.g. from cseweb.ucsd.edu/~jmcauley/datasets.html or the Assignment 1 data) and a task relevant to course content (rating prediction, read/purchase prediction, classification from text, etc.). Record it in `docs/decision.md`. Agents may draft 2–3 candidate options with pros/cons; humans choose.
+**Context & Scope:** Nothing is chosen. Pick a dataset (e.g. from cseweb.ucsd.edu/~jmcauley/datasets.html or the Assignment 1 data) and a task relevant to course content (rating prediction, read/purchase prediction, classification from text, etc.). Record it in `docs/decision.md`. Agents may draft 2 or 3 candidate options with pros/cons; humans choose.
 **Acceptance Criteria:**
 - [ ] `docs/decision.md` states: dataset + source URL + size, task (inputs → output), primary metric + secondary metric, ≥2 planned baselines (≥1 from course), at least one course model
 - [ ] Dataset size is workable on a laptop (or subsampling plan documented)
 - [ ] Every group member has agreed (names listed)
 - [ ] HANDOFF.md §0 A4 marked confirmed
-**Dependencies:** none — **blocks almost everything**
+**Dependencies:** none. **Blocks almost everything.**
 
 ### I-04 · Shared data loader + fixed split in `src/data.py`
 **Labels:** `type:data` `area:s2-eda` `priority:p0` `status:blocked` `owner:agent-ok`
@@ -97,7 +97,7 @@ GitHub colors (optional): type=blue, area=purple, priority p0 red / p1 orange / 
 **Acceptance Criteria:**
 - [ ] Context paragraph with source citation
 - [ ] ≥1 summary table (counts, missing values, target distribution)
-- [ ] ≥3 labelled plots, each followed by a 1–2 sentence takeaway
+- [ ] ≥3 labelled plots, each followed by a 1 to 2 sentence takeaway
 - [ ] Each finding linked to a modeling choice ("→ motivates X")
 **Dependencies:** I-04
 
@@ -168,7 +168,7 @@ GitHub colors (optional): type=blue, area=purple, priority p0 red / p1 orange / 
 **Context & Scope:** `docs/related_work.md`. How this dataset (or similar ones) has been used; how prior work approached the task; the numbers they reported. Real, verifiable sources only.
 **Acceptance Criteria:**
 - [ ] ≥3 sources with working links
-- [ ] Each source: 2–3 sentence summary in our own words, plus its reported metric if any
+- [ ] Each source: 2 to 3 sentence summary in our own words, plus its reported metric if any
 - [ ] No invented citations (every link opened and checked)
 **Dependencies:** I-03
 
@@ -189,7 +189,7 @@ GitHub colors (optional): type=blue, area=purple, priority p0 red / p1 orange / 
 - [ ] No leftover debug cells, giant raw outputs or warnings spam
 - [ ] Every number planned for the slides appears in it
 - [ ] Notebook frozen by the internal milestone date (HANDOFF §0)
-**Dependencies:** I-05 to I-15 (p2/p1 items may be dropped if late — note in HANDOFF)
+**Dependencies:** I-05 to I-15 (p2/p1 items may be dropped if late; note it in HANDOFF)
 
 ### I-17 · Execute + export `workbook.html`
 **Labels:** `type:submission` `area:notebook` `priority:p0` `status:blocked` `owner:agent-ok`
@@ -215,14 +215,14 @@ GitHub colors (optional): type=blue, area=purple, priority p0 red / p1 orange / 
 **Acceptance Criteria:**
 - [ ] One clearly titled block per section, in the same order as the notebook
 - [ ] Every number on a slide matches `workbook.html`
-- [ ] Timing plan adds up to 18–22 min
+- [ ] Timing plan adds up to 18 to 22 min
 **Dependencies:** I-16
 
 ### I-20 · Record and edit ~20-min MP4 video
 **Labels:** `type:presentation` `area:video` `priority:p0` `status:blocked` `owner:human`
 **Context & Scope:** Record slides plus code walkthrough (Zoom or similar). Export H.264 MP4.
 **Acceptance Criteria:**
-- [ ] Length 18–22 min
+- [ ] Length 18 to 22 min
 - [ ] MP4, H.264/AAC, plays in a standard browser and in QuickTime
 - [ ] Audio is clear; code is readable at 1080p
 - [ ] Narration matches the notebook
