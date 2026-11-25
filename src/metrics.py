@@ -5,6 +5,7 @@ The primary metric needs scores, so models return class probabilities (see src/m
 """
 
 import numpy as np
+import pandas as pd
 from sklearn.metrics import f1_score, roc_auc_score
 
 CLASSES = ("small", "fit", "large")
@@ -13,11 +14,14 @@ CLASSES = ("small", "fit", "large")
 def average_auc(y_true, proba) -> float:
     """Primary metric: one-vs-rest AUC for each class, averaged with equal weight.
 
-    `proba` is an (n, 3) array or DataFrame with columns in CLASSES order and rows summing to 1.
+    `proba` is a DataFrame with a column per class (matched by name), or an (n, 3) array with
+    columns in CLASSES order. Rows sum to 1.
     Calls sklearn `roc_auc_score(multi_class="ovr", average="macro")`, after reordering the columns
     to the sorted label order sklearn requires.
     Constant scores give 0.5, a perfect ranking gives 1.0.
     """
+    if isinstance(proba, pd.DataFrame):
+        proba = proba[list(CLASSES)]  # by name: sklearn models return columns in alphabetical order
     order = np.argsort(CLASSES)  # sklearn requires `labels` sorted, so reorder the columns to match
     scores = np.asarray(proba)[:, order]
     return float(roc_auc_score(y_true, scores, multi_class="ovr", average="macro", labels=sorted(CLASSES)))

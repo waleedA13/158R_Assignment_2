@@ -1,6 +1,7 @@
 """Unit tests for src/metrics.py with hand-computed values."""
 
 import numpy as np
+import pandas as pd
 import pytest
 
 from src import metrics
@@ -47,3 +48,12 @@ def test_macro_f1_hand_computed():
 
 def test_macro_f1_all_correct_is_one():
     assert metrics.macro_f1(Y, Y) == pytest.approx(1.0)
+
+
+def test_average_auc_uses_dataframe_column_names_not_position():
+    y = ["small", "fit", "large", "fit"]
+    perfect = pd.DataFrame(
+        [[1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 1, 0]], columns=list(metrics.CLASSES), dtype=float
+    )
+    shuffled = perfect[["fit", "large", "small"]]  # sklearn's alphabetical classes_ order
+    assert metrics.average_auc(y, shuffled) == 1.0
