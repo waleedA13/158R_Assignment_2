@@ -121,6 +121,8 @@ python scripts/check_submission.py      # local autograder (after I-18)
 
 - **2026-11-24 · agent (I-03):** Aditya agreed on #25: option A with defaults. Wrote `docs/decision.md`, ticked I-03 criteria, A4 confirmed. Schedule is 2 days behind: Thanksgiving is now a work day and I-11 (tuning) is cut (see the catch-up plan given on 11-24). Next: merge the I-03 PR, then I-04 (Waleed, needs the data file in `data/raw/`), I-05 and I-14 (Aditya).
 
+- **2026-11-24 · agent (I-05):** On `i05-task`: `notebooks/01_task.ipynb`, four markdown cells (task, evaluation, baselines, validity), about 370 words, no outputs. Written from option A in `docs/options.md` and the agreement in issue #25, because `docs/decision.md` does not exist yet. `bash scripts/check.sh` passes (Python 3.12). Left: re-check the wording against `docs/decision.md` once it lands, and replace the planned leakage guard text with the real `src/data.py` details after I-04. Pushed as PR #52.
+
 - **2026-11-22 · agent (I-03 prep):** `docs/options.md` on `i03-options`: 3 candidates (A Rent the Runway fit prediction, B BeerAdvocate rating prediction, C Steam next-game recommendation) with sizes, fields, metrics, baselines and paper numbers read from the linked PDFs. Not a decision. Next: Waleed + Aditya pick one, write `docs/decision.md`, close I-03.
 
 - **2026-11-22 · agent (I-02):** On `i02-spec` (stacked on `i23-ci`): `docs/spec.pdf` (identical to the original) and `docs/requirements.md` (72-line paraphrase: deadlines, deliverables, 5 sections, rubric, 7 autograder checks, peer grading). Verified 30/30 spec items present. Next: I-03 decision with Aditya, I-18 checker.
