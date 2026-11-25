@@ -467,9 +467,9 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:research` `area:s5-related` `P0` `status:blocked` `owner:agent-ok` `Order 2` `Aditya`
 **Context & Scope:** `docs/related_work.md`. How this dataset (or similar ones) has been used; how prior work approached the task; the numbers they reported. Real, verifiable sources only.
 **Acceptance Criteria:**
-- [ ] ≥3 sources with working links
-- [ ] Each source: 2 to 3 sentence summary in our own words, plus its reported metric if any
-- [ ] No invented citations (every link opened and checked)
+- [x] ≥3 sources with working links
+- [x] Each source: 2 to 3 sentence summary in our own words, plus its reported metric if any
+- [x] No invented citations (every link opened and checked)
 **Dependencies:** I-03
 
 **Agent prompt** (paste into your coding agent):
