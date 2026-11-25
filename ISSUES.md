@@ -232,7 +232,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Acceptance Criteria:**
 - [x] Covers all 3 spec bullets for Section 1 explicitly, under headings
 - [x] States why the task is relevant to course content
-- [ ] Consistent with `docs/decision.md` (file not written yet; checked against the option A agreement in issue #25 instead)
+- [x] Consistent with `docs/decision.md`
 **Dependencies:** I-03
 
 **Agent prompt** (paste into your coding agent):
