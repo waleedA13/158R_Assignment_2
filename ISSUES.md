@@ -162,10 +162,10 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:decision` `area:s1-task` `P0` `status:ready` `owner:human` `Order 1` `Waleed`
 **Context & Scope:** Nothing is chosen. Pick a dataset (e.g. from cseweb.ucsd.edu/~jmcauley/datasets.html or the Assignment 1 data) and a task relevant to course content (rating prediction, read/purchase prediction, classification from text, etc.). Record it in `docs/decision.md`. Agents may draft 2 or 3 candidate options with pros/cons; humans choose.
 **Acceptance Criteria:**
-- [ ] `docs/decision.md` states: dataset + source URL + size, task (inputs → output), primary metric + secondary metric, ≥2 planned baselines (≥1 from course), at least one course model
-- [ ] Dataset size is workable on a laptop (or subsampling plan documented)
-- [ ] Every group member has agreed (names listed)
-- [ ] HANDOFF.md §0 A4 marked confirmed
+- [x] `docs/decision.md` states: dataset + source URL + size, task (inputs → output), primary metric + secondary metric, ≥2 planned baselines (≥1 from course), at least one course model
+- [x] Dataset size is workable on a laptop (or subsampling plan documented)
+- [x] Every group member has agreed (names listed)
+- [x] HANDOFF.md §0 A4 marked confirmed
 **Dependencies:** none. **Blocks almost everything.**
 
 **Agent prompt** (paste into your coding agent):
@@ -230,9 +230,9 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:writing` `area:s1-task` `P0` `status:blocked` `owner:agent-ok` `Order 2` `Aditya`
 **Context & Scope:** `notebooks/01_task.ipynb`, markdown only: the task, how it's evaluated, which baselines, how prediction validity is assessed (held-out test, sanity checks, significance or variance across seeds).
 **Acceptance Criteria:**
-- [ ] Covers all 3 spec bullets for Section 1 explicitly, under headings
-- [ ] States why the task is relevant to course content
-- [ ] Consistent with `docs/decision.md`
+- [x] Covers all 3 spec bullets for Section 1 explicitly, under headings
+- [x] States why the task is relevant to course content
+- [x] Consistent with `docs/decision.md`
 **Dependencies:** I-03
 
 **Agent prompt** (paste into your coding agent):
@@ -467,9 +467,9 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:research` `area:s5-related` `P0` `status:blocked` `owner:agent-ok` `Order 2` `Aditya`
 **Context & Scope:** `docs/related_work.md`. How this dataset (or similar ones) has been used; how prior work approached the task; the numbers they reported. Real, verifiable sources only.
 **Acceptance Criteria:**
-- [ ] ≥3 sources with working links
-- [ ] Each source: 2 to 3 sentence summary in our own words, plus its reported metric if any
-- [ ] No invented citations (every link opened and checked)
+- [x] ≥3 sources with working links
+- [x] Each source: 2 to 3 sentence summary in our own words, plus its reported metric if any
+- [x] No invented citations (every link opened and checked)
 **Dependencies:** I-03
 
 **Agent prompt** (paste into your coding agent):
