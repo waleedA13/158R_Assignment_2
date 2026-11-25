@@ -195,10 +195,10 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:data` `area:s2-eda` `P0` `status:blocked` `owner:agent-ok` `Order 2` `Waleed`
 **Context & Scope:** Implement `load()` and `split(seed=158)` → train/valid/test. Document how to download raw data into `data/raw/` (the data itself is not committed). This is the one split everyone uses.
 **Acceptance Criteria:**
-- [ ] `from src.data import load, split` works from repo root and from `notebooks/`
-- [ ] Split is deterministic (same sizes and IDs across two runs)
-- [ ] Split proportions and any leakage guard (e.g. by user/time) documented in the docstring
-- [ ] Download instructions are in `README.md`
+- [x] `from src.data import load, split` works from repo root and from `notebooks/`
+- [x] Split is deterministic (same sizes and IDs across two runs)
+- [x] Split proportions and any leakage guard (e.g. by user/time) documented in the docstring
+- [x] Download instructions are in `README.md`
 **Dependencies:** I-01, I-03
 
 **Agent prompt** (paste into your coding agent):

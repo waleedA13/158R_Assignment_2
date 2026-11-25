@@ -30,4 +30,24 @@ pip install -r requirements-dev.txt   # project + test/check tools (requirements
 
 ## Data
 
-Download instructions are added with I-04, once the dataset is chosen (I-03).
+Rent the Runway clothing fit data (UCSD McAuley lab), chosen in `docs/decision.md`.
+
+1. Download https://mcauleylab.ucsd.edu/public_datasets/data/renttherunway/renttherunway_final_data.json.gz (31 MB, listed on https://cseweb.ucsd.edu/~jmcauley/datasets.html).
+2. Put it, still gzipped and with the same name, at `data/raw/renttherunway_final_data.json.gz`. `data/` is gitignored, so it is never committed.
+3. Check it: `python -m src.data` should print 192355 transactions and these split sizes and fingerprints:
+
+```
+train  153885  ...  hash=b4ab00b3355f
+valid   19235  ...  hash=405c410be45b
+test    19235  ...  hash=3c40a84ea105
+```
+
+In code, always use the shared loader and split (from a notebook in `notebooks/`, add `sys.path.append("..")` first):
+
+```python
+from src.data import load, split
+
+train, valid, test = split(load())
+```
+
+Tests and CI use the synthetic sample in `tests/fixtures/` instead (`DATA_DIR=tests/fixtures`); `scripts/make_fixture.py` regenerates it.
