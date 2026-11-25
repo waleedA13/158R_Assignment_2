@@ -15,7 +15,7 @@ _Last updated: 2026-11-22 (setup complete, ready to start issues) · Repo state:
 | A9 | **Thanksgiving Thu to Fri, Nov 26 to 27.** Planned as buffer days, not work days | Schedule in ISSUES.md "Day-by-day plan" | Team |
 | A2 | **Late submissions not accepted** (OSD-only late window) | No slack, so the internal freeze is 2 days early | Spec |
 | A3 | **Team of 2:** Waleed (`waleedA13`) and Aditya (`AdityaJadhav17`, not yet a collaborator) | Aditya's issues are assigned once he accepts the invite (`scripts/assign_aditya.py`) | Team |
-| A4 | **No dataset or predictive task chosen yet** | Blocks almost everything (I-03) | Team |
+| A4 | **Confirmed 2026-11-24:** Rent the Runway, predict fit (small / fit / large); average AUC + macro-F1; random 80/10/10 split. Full record: `docs/decision.md` | Every issue follows it | Waleed + Aditya on #25 |
 | A5 | **Python 3.12** (3.10 is end of life and blocks security fixes). Jupyter, pandas 3, numpy 2, scikit-learn, matplotlib; versions pinned in `requirements.txt`, tools in `requirements-dev.txt` | Everyone uses a 3.12 venv | Confirmed by Waleed |
 | A6 | Spec is in the repo: `docs/spec.pdf`, summarized in `docs/requirements.md` (the PDF wins on conflicts) | Agents read requirements.md | Done (I-02) |
 | A7 | GitHub issues are the live tracker, titled `[I-NN] ...`. `docs/github_issue_map.md` maps IDs to issue numbers. Issues are #23 to #44. After editing ISSUES.md, run `scripts/sync_issues.py` (updates in place); `create_github_issues.py` is only for a full rebuild. Run both on your own machine only | Find work by I-NN | Repo owner |
@@ -118,6 +118,10 @@ python scripts/check_submission.py      # local autograder (after I-18)
 | 🧱 Critical path | I-03 → I-04 → I-08 → I-09/I-10 → I-12 → I-16 → I-17 → I-19 → I-20 → I-21 |
 
 ## 5. Session Log & Open Notes (append newest on top)
+
+- **2026-11-24 · agent (I-03):** Aditya agreed on #25: option A with defaults. Wrote `docs/decision.md`, ticked I-03 criteria, A4 confirmed. Schedule is 2 days behind: Thanksgiving is now a work day and I-11 (tuning) is cut (see the catch-up plan given on 11-24). Next: merge the I-03 PR, then I-04 (Waleed, needs the data file in `data/raw/`), I-05 and I-14 (Aditya).
+
+- **2026-11-22 · agent (I-03 prep):** `docs/options.md` on `i03-options`: 3 candidates (A Rent the Runway fit prediction, B BeerAdvocate rating prediction, C Steam next-game recommendation) with sizes, fields, metrics, baselines and paper numbers read from the linked PDFs. Not a decision. Next: Waleed + Aditya pick one, write `docs/decision.md`, close I-03.
 
 - **2026-11-22 · agent (I-02):** On `i02-spec` (stacked on `i23-ci`): `docs/spec.pdf` (identical to the original) and `docs/requirements.md` (72-line paraphrase: deadlines, deliverables, 5 sections, rubric, 7 autograder checks, peer grading). Verified 30/30 spec items present. Next: I-03 decision with Aditya, I-18 checker.
 
