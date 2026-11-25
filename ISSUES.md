@@ -162,10 +162,10 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:decision` `area:s1-task` `P0` `status:ready` `owner:human` `Order 1` `Waleed`
 **Context & Scope:** Nothing is chosen. Pick a dataset (e.g. from cseweb.ucsd.edu/~jmcauley/datasets.html or the Assignment 1 data) and a task relevant to course content (rating prediction, read/purchase prediction, classification from text, etc.). Record it in `docs/decision.md`. Agents may draft 2 or 3 candidate options with pros/cons; humans choose.
 **Acceptance Criteria:**
-- [ ] `docs/decision.md` states: dataset + source URL + size, task (inputs → output), primary metric + secondary metric, ≥2 planned baselines (≥1 from course), at least one course model
-- [ ] Dataset size is workable on a laptop (or subsampling plan documented)
-- [ ] Every group member has agreed (names listed)
-- [ ] HANDOFF.md §0 A4 marked confirmed
+- [x] `docs/decision.md` states: dataset + source URL + size, task (inputs → output), primary metric + secondary metric, ≥2 planned baselines (≥1 from course), at least one course model
+- [x] Dataset size is workable on a laptop (or subsampling plan documented)
+- [x] Every group member has agreed (names listed)
+- [x] HANDOFF.md §0 A4 marked confirmed
 **Dependencies:** none. **Blocks almost everything.**
 
 **Agent prompt** (paste into your coding agent):
