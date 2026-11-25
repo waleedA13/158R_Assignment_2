@@ -313,8 +313,8 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:model` `area:s3-modeling` `P0` `status:blocked` `owner:agent-ok` `Order 3` `Aditya`
 **Context & Scope:** `src/models.py` + `notebooks/03_models.ipynb`. E.g. global mean / majority class / popularity. Common `fit(train)` / `predict(X)` interface.
 **Acceptance Criteria:**
-- [ ] ≥1 trivial baseline implemented and scored on validation via `src/metrics.py`
-- [ ] Interface documented so I-09/I-10 reuse it
+- [x] ≥1 trivial baseline implemented and scored on validation via `src/metrics.py`
+- [x] Interface documented so I-09/I-10 reuse it
 **Dependencies:** I-04
 
 **Agent prompt** (paste into your coding agent):
