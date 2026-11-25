@@ -31,3 +31,11 @@ def test_load_then_split_on_fixture(df):
     assert (len(train), len(valid), len(test)) == (160, 20, 20)
     seen = set(train["txn_id"]) | set(valid["txn_id"]) | set(test["txn_id"])
     assert seen == set(df["txn_id"])
+
+
+def test_load_split_preprocess_on_fixture(df):
+    train, valid, test = data.preprocess(*data.split(df))
+    assert (len(train), len(valid), len(test)) == (160, 20, 20)
+    for part in (train, valid, test):
+        assert not part[list(data.NUMERIC)].isna().any(axis=None)
+        assert set(data.POST_RENTAL).isdisjoint(part.columns)
