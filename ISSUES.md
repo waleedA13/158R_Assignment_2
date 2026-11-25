@@ -230,9 +230,9 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:writing` `area:s1-task` `P0` `status:blocked` `owner:agent-ok` `Order 2` `Aditya`
 **Context & Scope:** `notebooks/01_task.ipynb`, markdown only: the task, how it's evaluated, which baselines, how prediction validity is assessed (held-out test, sanity checks, significance or variance across seeds).
 **Acceptance Criteria:**
-- [ ] Covers all 3 spec bullets for Section 1 explicitly, under headings
-- [ ] States why the task is relevant to course content
-- [ ] Consistent with `docs/decision.md`
+- [x] Covers all 3 spec bullets for Section 1 explicitly, under headings
+- [x] States why the task is relevant to course content
+- [ ] Consistent with `docs/decision.md` (file not written yet; checked against the option A agreement in issue #25 instead)
 **Dependencies:** I-03
 
 **Agent prompt** (paste into your coding agent):

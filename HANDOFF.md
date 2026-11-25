@@ -119,6 +119,8 @@ python scripts/check_submission.py      # local autograder (after I-18)
 
 ## 5. Session Log & Open Notes (append newest on top)
 
+- **2026-11-24 · agent (I-05):** On `i05-task`: `notebooks/01_task.ipynb`, four markdown cells (task, evaluation, baselines, validity), about 370 words, no outputs. Written from option A in `docs/options.md` and the agreement in issue #25, because `docs/decision.md` does not exist yet. `bash scripts/check.sh` passes (Python 3.12). Left: re-check the wording against `docs/decision.md` once it lands, and replace the planned leakage guard text with the real `src/data.py` details after I-04. Not pushed, no PR yet.
+
 - **2026-11-22 · agent (I-02):** On `i02-spec` (stacked on `i23-ci`): `docs/spec.pdf` (identical to the original) and `docs/requirements.md` (72-line paraphrase: deadlines, deliverables, 5 sections, rubric, 7 autograder checks, peer grading). Verified 30/30 spec items present. Next: I-03 decision with Aditya, I-18 checker.
 
 - **2026-11-22 · agent (I-23):** CI on `i23-ci` (stacked on `i01-scaffold`): `ci.yml` with 6 chained stages, `scripts/check.sh`, Dependabot, unit tests for the issue scripts, integration smoke test, e2e workbook HTML test (skips until I-16; verified it passes on a good export and fails on an error cell). All stages pass on Python 3.12. Added I-23 to ISSUES.md and a tests-first step to the prompts of I-04, I-07 to I-10, I-12, I-18; I-04 now defines `DATA_DIR` + `tests/fixtures/`. `sync_issues.py` can now create new issues. Next: Waleed pushes, opens PRs, runs `sync_issues.py` after merge, adds the branch rule.
