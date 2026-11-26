@@ -289,7 +289,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Acceptance Criteria:**
 - [ ] Every transformation listed, with its rationale
 - [ ] Row counts before/after each filter shown
-- [ ] No test-set statistics used in fitting transforms
+- [x] No test-set statistics used in fitting transforms
 **Dependencies:** I-04
 
 **Agent prompt** (paste into your coding agent):
