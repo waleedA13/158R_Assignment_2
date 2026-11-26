@@ -259,10 +259,10 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:data` `area:s2-eda` `P0` `status:blocked` `owner:agent-ok` `Order 3` `Waleed`
 **Context & Scope:** `notebooks/02_eda.ipynb`. Where the data came from, its purpose and how it was collected; summary stats; distributions of target and key features; sparsity/long-tail plots where relevant.
 **Acceptance Criteria:**
-- [ ] Context paragraph with source citation
-- [ ] ≥1 summary table (counts, missing values, target distribution)
-- [ ] ≥3 labelled plots, each followed by a 1 to 2 sentence takeaway
-- [ ] Each finding linked to a modeling choice ("→ motivates X")
+- [x] Context paragraph with source citation
+- [x] ≥1 summary table (counts, missing values, target distribution)
+- [x] ≥3 labelled plots, each followed by a 1 to 2 sentence takeaway
+- [x] Each finding linked to a modeling choice ("→ motivates X")
 **Dependencies:** I-04
 
 **Agent prompt** (paste into your coding agent):
@@ -287,8 +287,8 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:data` `area:s2-eda` `P0` `status:blocked` `owner:agent-ok` `Order 3` `Waleed`
 **Context & Scope:** Filtering, cleaning, feature construction and encoding, in `src/data.py` with an explanation in `notebooks/02_eda.ipynb`. Note what was already preprocessed by the dataset authors.
 **Acceptance Criteria:**
-- [ ] Every transformation listed, with its rationale
-- [ ] Row counts before/after each filter shown
+- [x] Every transformation listed, with its rationale
+- [x] Row counts before/after each filter shown
 - [x] No test-set statistics used in fitting transforms
 **Dependencies:** I-04
 
