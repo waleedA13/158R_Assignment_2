@@ -28,6 +28,13 @@ pip install -r requirements-dev.txt   # project + test/check tools (requirements
 | `docs/` | Spec, requirements summary, dataset decision, related work |
 | `data/` | Raw and processed data. Not committed |
 
+## Before submitting
+
+```bash
+python scripts/check_submission.py   # runs the course autograder's checks on workbook.html and video_url.txt
+```
+It mirrors the autograder code in `docs/spec.pdf`: both files present, `workbook.html` starts with `<!DOCTYPE html>`, and for a Google Drive link the file downloads, is over 1 MB and is `video/mp4`. YouTube links skip the download checks.
+
 ## Data
 
 Rent the Runway clothing fit data (UCSD McAuley lab), chosen in `docs/decision.md`.

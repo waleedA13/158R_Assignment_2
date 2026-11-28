@@ -135,6 +135,8 @@ python scripts/check_submission.py      # local autograder (after I-18)
 
 - **2026-11-24 · agent (I-05):** On `i05-task`: `notebooks/01_task.ipynb`, four markdown cells (task, evaluation, baselines, validity), about 370 words, no outputs. Written from option A in `docs/options.md` and the agreement in issue #25, because `docs/decision.md` does not exist yet. `bash scripts/check.sh` passes (Python 3.12). Left: re-check the wording against `docs/decision.md` once it lands, and replace the planned leakage guard text with the real `src/data.py` details after I-04. Pushed as PR #52.
 
+- **2026-11-22 · agent (I-18):** `scripts/check_submission.py` on `i18-checker`, test-first (17 unit tests committed failing, then implemented). Mirrors the spec's autograder code exactly, including the Drive virus-scan page. Network faked in tests. Open: the first criterion (pass on a real MP4 Drive link) can only be ticked once the video exists (I-21).
+
 - **2026-11-22 · agent (I-03 prep):** `docs/options.md` on `i03-options`: 3 candidates (A Rent the Runway fit prediction, B BeerAdvocate rating prediction, C Steam next-game recommendation) with sizes, fields, metrics, baselines and paper numbers read from the linked PDFs. Not a decision. Next: Waleed + Aditya pick one, write `docs/decision.md`, close I-03.
 
 - **2026-11-22 · agent (I-02):** On `i02-spec` (stacked on `i23-ci`): `docs/spec.pdf` (identical to the original) and `docs/requirements.md` (72-line paraphrase: deadlines, deliverables, 5 sections, rubric, 7 autograder checks, peer grading). Verified 30/30 spec items present. Next: I-03 decision with Aditya, I-18 checker.
