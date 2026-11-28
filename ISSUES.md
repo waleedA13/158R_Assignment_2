@@ -364,9 +364,9 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:model` `area:s3-modeling` `P1` `status:blocked` `owner:agent-ok` `Order 5` `Aditya`
 **Context & Scope:** The improved model (richer features, a combined model, or one from another class). Explain the architectural choices.
 **Acceptance Criteria:**
-- [ ] Implemented in `src/models.py`, demonstrated in `notebooks/03_models.ipynb`
-- [ ] Markdown compares ≥2 approaches on complexity, efficiency and implementation difficulty
-- [ ] Training time recorded
+- [x] Implemented in `src/models.py`, demonstrated in `notebooks/03_models.ipynb`
+- [x] Markdown compares ≥2 approaches on complexity, efficiency and implementation difficulty
+- [x] Training time recorded
 **Dependencies:** I-09
 
 **Agent prompt** (paste into your coding agent):
