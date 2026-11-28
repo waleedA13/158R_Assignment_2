@@ -442,9 +442,9 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:eval` `area:s4-eval` `P0` `status:blocked` `owner:agent-ok` `Order 6` `Aditya`
 **Context & Scope:** Explain why the chosen metrics fit better than alternatives; show where the model fails (by segment, by sparsity, etc.); explain any negative results.
 **Acceptance Criteria:**
-- [ ] Paragraph justifying metrics vs. ≥1 alternative
-- [ ] ≥2 evaluation plots (e.g. per-segment error, calibration/ROC, error vs. activity level)
-- [ ] Negative or surprising results explained
+- [x] Paragraph justifying metrics vs. ≥1 alternative
+- [x] ≥2 evaluation plots (e.g. per-segment error, calibration/ROC, error vs. activity level)
+- [x] Negative or surprising results explained
 **Dependencies:** I-12
 
 **Agent prompt** (paste into your coding agent):
