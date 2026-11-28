@@ -119,6 +119,17 @@ def test_virus_scan_page_is_followed():
     )
 
 
+def test_empty_download_fails_cleanly():
+    with pytest.raises(cs.CheckError, match="less than 1mb"):
+        cs.check_video("https://drive.google.com/file/d/ID/view", get=FakeGet(b""))
+
+
+def test_virus_scan_page_without_uuid_fails_cleanly():
+    page = b"<html><title>Google Drive - Virus scan warning</title><form></form></html>"
+    with pytest.raises(cs.CheckError, match="virus scan page"):
+        cs.check_video("https://drive.google.com/file/d/ID/view", get=FakeGet(page))
+
+
 # ---- main
 def test_main_returns_0_on_pass(tmp_path, monkeypatch):
     (tmp_path / "workbook.html").write_text("<!DOCTYPE html><html></html>")
