@@ -12,7 +12,12 @@ Score with src.metrics: `average_auc(df["fit"], proba)` and `macro_f1(df["fit"],
 """
 
 import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LogisticRegression as _SkLogisticRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+from src.data import CATEGORICAL, NUMERIC
 from src.metrics import CLASSES
 
 
@@ -38,3 +43,36 @@ class MajorityClass(Model):
 
     def predict_proba(self, df: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame([self.freq_.to_numpy()] * len(df), columns=list(CLASSES), index=df.index)
+
+
+class LogisticRegression(Model):
+    """Course model: multinomial logistic regression on size, measurements and categories (I-09).
+
+    Input: rows from `src.data.preprocess()`. Features: `size`, the NUMERIC columns and their
+    `_missing` flags, and one-hot CATEGORICAL columns. Numbers are standardised, unseen categories
+    get all zeros. Everything is fitted on train only. `C` and `class_weight` are for I-11 to tune.
+    """
+
+    def __init__(self, C: float = 1.0, class_weight: str | dict | None = None):
+        self.C, self.class_weight = C, class_weight
+
+    def fit(self, train: pd.DataFrame) -> "LogisticRegression":
+        self.numeric_ = ["size", *NUMERIC]
+        self.flags_ = [f"{c}_missing" for c in NUMERIC]
+        columns = ColumnTransformer(
+            [
+                ("num", StandardScaler(), self.numeric_),
+                ("cat", OneHotEncoder(handle_unknown="ignore"), list(CATEGORICAL)),
+                ("flags", "passthrough", self.flags_),
+            ]
+        )
+        clf = _SkLogisticRegression(C=self.C, class_weight=self.class_weight, max_iter=1000)
+        self.pipeline_ = make_pipeline(columns, clf).fit(train, train["fit"])
+        return self
+
+    def predict_proba(self, df: pd.DataFrame) -> pd.DataFrame:
+        proba = self.pipeline_.predict_proba(df)  # columns follow classes_ (alphabetical), so name them
+        classes = self.pipeline_.classes_
+        return pd.DataFrame(proba, columns=classes, index=df.index).reindex(
+            columns=list(CLASSES), fill_value=0.0
+        )
