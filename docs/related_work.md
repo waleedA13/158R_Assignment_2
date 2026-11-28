@@ -42,21 +42,21 @@ Every link below was opened on 2026-11-24 and the numbers were read from the pap
 
 ## Comparison with our results (I-15)
 
-Our numbers are test-split scores from `notebooks/04_eval.ipynb` (I-12), run on the full data. Reported numbers are copied from the sections above. "Micro AUC" is the micro-averaged one-vs-rest AUC computed from the same test predictions, added because Sheikh et al. report that average.
+Our numbers are test-split scores from `notebooks/04_eval.ipynb` (I-12), run on the full data. Reported numbers are copied from the sections above.
 
 | Source | Reported model | Reported metric | Reported | Our model | Our metric | Ours |
 |---|---|---|---|---|---|---|
 | Misra et al. 2018 | 1-LV-LR | average AUC | 0.61 | LogisticRegression | average AUC | 0.620 |
 | Misra et al. 2018 | K-LF-ML (proposed) | average AUC | 0.719 | LatentFactorFit | average AUC | 0.758 |
-| Sheikh et al. 2019 | MLP baseline | micro-averaged AUC | 0.692 | LogisticRegression | micro AUC | 0.601 |
-| Sheikh et al. 2019 | SFnet (proposed) | micro-averaged AUC | 0.749 | LatentFactorFit | micro AUC | 0.790 |
+
+Sheikh et al. 2019 has no row. They report micro-averaged AUC (0.692 for their MLP baseline, 0.749 for SFnet). Micro averaging pools the three one-vs-rest problems into one ranking, and a constant score that only reflects the class frequencies already ranks "fit" rows above the rest. The majority baseline, which knows nothing about any row, scores a micro AUC of 0.804 on our test split (printed by the comparison cell in `notebooks/04_eval.ipynb`), higher than both reported values. A micro AUC therefore says more about the label mix than about the model, and we do not compare against it.
 
 Caveats, which apply to every row:
 
-- **Split.** All three studies use a random 80/10/10 split, but the exact split of Misra et al. is not available, and Sheikh et al. average 10 runs. Our interval (about 0.014 wide for average AUC) covers test-row sampling in one split only.
-- **Averaging.** Our average AUC is the one-vs-rest mean over three classes. Misra et al. do not define their average, and Sheikh et al. use micro-averaging. The micro value also depends on how scores compare across classes, and our balanced class weights were tuned for the macro metric.
-- **Rows.** Our loader drops 189 exact duplicate lines (192,355 rows remain). We do not know whether the papers kept them.
-- **Models.** We have no metric learning and no neural network. The pairing of an MLP with a logistic regression (row 3) is loose.
+- **Split.** Ours, Misra et al. and Sheikh et al. all use a random 80/10/10 split, but the exact split of Misra et al. is not available. Sembium et al. use a time-based split. Our interval (about 0.014 wide for average AUC) covers test-row sampling in one split only.
+- **Averaging.** Our average AUC is the one-vs-rest mean over three classes. Misra et al. do not define their average.
+- **Rows.** Our loader drops 189 exact duplicate lines (192,355 rows remain). We do not know whether the paper kept them.
+- **Models.** We have no metric learning and no neural network.
 - **Sembium et al. 2017** reports only percentage gains on proprietary data, so it has no row.
 
-Reading: our logistic regression lands near the 0.61 of the Misra baseline, and our main model scores above both published proposed models on the matching metric. With these caveats the table shows that our numbers are in the same range as the literature. It does not show that we beat it.
+Reading: our logistic regression lands near the 0.61 of the Misra baseline, and our main model scores above their proposed model on the same metric. With these caveats the table shows that our numbers are in the same range as the literature. It does not show that we beat it.
