@@ -36,6 +36,29 @@ def macro_f1(y_true, y_pred) -> float:
     return float(f1_score(y_true, y_pred, average="macro", labels=list(CLASSES), zero_division=0))
 
 
+def bootstrap_ci(y_true, proba, n_boot: int = 1000, seed: int = 0, level: float = 0.95) -> dict:
+    """Percentile bootstrap interval for both metrics, from one set of test predictions.
+
+    Resamples rows with replacement `n_boot` times (fixed `seed`) and recomputes `average_auc` and
+    `macro_f1` (hard labels = most likely class). Returns {"average AUC": (low, high), "macro-F1":
+    (low, high)}. A resample that misses a class is skipped, since AUC is undefined without it.
+    """
+    y = np.asarray(y_true)
+    scores = proba[list(CLASSES)].to_numpy() if isinstance(proba, pd.DataFrame) else np.asarray(proba)
+    labels = np.asarray(CLASSES)[scores.argmax(axis=1)]
+    rng = np.random.default_rng(seed)
+    draws = []
+    for _ in range(n_boot):
+        i = rng.integers(0, len(y), len(y))
+        if len(set(y[i])) == len(CLASSES):
+            draws.append((average_auc(y[i], scores[i]), macro_f1(y[i], labels[i])))
+    tails = [100 * (1 - level) / 2, 100 * (1 + level) / 2]
+    return {
+        name: tuple(float(v) for v in np.percentile([d[k] for d in draws], tails))
+        for k, name in enumerate(("average AUC", "macro-F1"))
+    }
+
+
 if __name__ == "__main__":
     y = ["small", "fit", "large", "fit"]
     perfect = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 1, 0]], dtype=float)
