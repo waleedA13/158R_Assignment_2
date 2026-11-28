@@ -338,9 +338,9 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:model` `area:s3-modeling` `P0` `status:blocked` `owner:agent-ok` `Order 4` `Aditya`
 **Context & Scope:** A model taught in the course that fits the task (e.g. linear/logistic regression on features, latent factor model with biases, Jaccard/similarity-based recommender). Required by the spec even if the main model comes from elsewhere.
 **Acceptance Criteria:**
-- [ ] Model implemented with the shared interface; validation score reported
-- [ ] Inputs, outputs and objective stated in markdown
-- [ ] Beats or is compared honestly against I-08
+- [x] Model implemented with the shared interface; validation score reported
+- [x] Inputs, outputs and objective stated in markdown
+- [x] Beats or is compared honestly against I-08
 **Dependencies:** I-08
 
 **Agent prompt** (paste into your coding agent):
@@ -571,8 +571,8 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Context & Scope:** `scripts/check_submission.py`, replicating the spec's autograder: both files exist; HTML prefix check; Drive file ID parsing, download >1 MB, `video/mp4` MIME via `python-magic` (YouTube links skip the download checks).
 **Acceptance Criteria:**
 - [ ] Passes on a known-good HTML file and MP4 Drive link
-- [ ] Fails with a clear message on: renamed `.ipynb`, a link without a file ID, a non-MP4 file
-- [ ] Usage documented in README
+- [x] Fails with a clear message on: renamed `.ipynb`, a link without a file ID, a non-MP4 file
+- [x] Usage documented in README
 **Dependencies:** I-01
 
 **Agent prompt** (paste into your coding agent):

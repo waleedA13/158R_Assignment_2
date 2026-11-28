@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src import metrics, models
+from src import data, metrics, models
 
 
 def frame(labels) -> pd.DataFrame:
@@ -54,3 +54,65 @@ def test_majority_baseline_auc_is_half():
     m = models.MajorityClass().fit(TRAIN)
     valid = frame(["small", "fit", "large", "fit"])
     assert metrics.average_auc(valid["fit"], m.predict_proba(valid)) == pytest.approx(0.5)
+
+
+# LogisticRegression (I-09): rows look like the output of src.data.preprocess()
+def features(size, labels=None) -> pd.DataFrame:
+    df = pd.DataFrame({"txn_id": range(len(size)), "size": np.asarray(size, dtype=float)})
+    for col in data.NUMERIC:
+        df[col] = 1.0
+        df[f"{col}_missing"] = 0
+    for col in data.CATEGORICAL:
+        df[col] = "unknown"
+    if labels is not None:
+        df["fit"] = labels
+    return df
+
+
+def separable(n=60):
+    size = np.random.default_rng(0).uniform(0, 30, n)
+    labels = np.where(size < 10, "small", np.where(size < 20, "fit", "large"))
+    return features(size, labels)
+
+
+def test_logreg_fit_returns_self():
+    m = models.LogisticRegression()
+    assert m.fit(separable()) is m
+
+
+def test_logreg_proba_columns_rows_sum_to_one_and_index_aligned():
+    df = separable().set_index(pd.Index(range(100, 160)))
+    proba = models.LogisticRegression().fit(separable()).predict_proba(df)
+    assert list(proba.columns) == list(metrics.CLASSES)
+    assert proba.shape == (60, 3)
+    assert list(proba.index) == list(df.index)
+    np.testing.assert_allclose(proba.sum(axis=1), 1.0)
+
+
+def test_logreg_does_not_read_the_label_column_at_predict_time():
+    m = models.LogisticRegression().fit(separable())
+    df = separable()
+    pd.testing.assert_frame_equal(
+        m.predict_proba(df.drop(columns="fit")), m.predict_proba(df.assign(fit="small"))
+    )
+
+
+def test_logreg_beats_majority_when_size_separates_classes():
+    train, valid = separable(300), separable(90)
+    auc = {}
+    for model in (models.MajorityClass(), models.LogisticRegression()):
+        proba = model.fit(train).predict_proba(valid)
+        auc[type(model).__name__] = metrics.average_auc(valid["fit"], proba)
+    assert auc["MajorityClass"] == pytest.approx(0.5)
+    assert auc["LogisticRegression"] > 0.9
+
+
+def test_logreg_predict_returns_labels_from_the_classes():
+    pred = models.LogisticRegression().fit(separable()).predict(separable())
+    assert set(pred) <= set(metrics.CLASSES)
+
+
+def test_logreg_handles_a_category_unseen_in_train():
+    m = models.LogisticRegression().fit(separable())
+    df = features([5.0, 25.0]).assign(body_type="never seen")
+    assert len(m.predict_proba(df)) == 2
