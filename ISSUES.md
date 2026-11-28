@@ -493,8 +493,8 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:research` `area:s5-related` `P0` `status:blocked` `owner:agent-ok` `Order 6` `Aditya`
 **Context & Scope:** A short table and discussion: our numbers vs. the literature, and why they differ (data split, subset, metric definition).
 **Acceptance Criteria:**
-- [ ] Comparison table, with caveats on comparability
-- [ ] Added to `workbook.ipynb` Section 5
+- [x] Comparison table, with caveats on comparability
+- [ ] Added to `workbook.ipynb` Section 5 (not met: workbook.ipynb does not exist until I-16; the section is in `notebooks/04_eval.ipynb` and `docs/related_work.md`)
 **Dependencies:** I-12, I-14
 
 **Agent prompt** (paste into your coding agent):
