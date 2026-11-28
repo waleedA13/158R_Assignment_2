@@ -180,3 +180,14 @@ def test_latent_beats_logreg_when_the_label_depends_on_the_item():
 def test_latent_class_weight_balanced_runs():
     proba = models.LatentFactorFit(K=0, class_weight="balanced").fit(by_item(120)).predict_proba(by_item(30))
     np.testing.assert_allclose(proba.sum(axis=1), 1.0)
+
+
+def test_latent_records_convergence():
+    m = models.LatentFactorFit(K=0).fit(by_item(120))
+    assert m.converged_ is True and m.n_iter_ > 0
+
+
+def test_latent_warns_and_flags_when_it_stops_at_max_iter():
+    with pytest.warns(UserWarning, match="did not converge"):
+        m = models.LatentFactorFit(K=2, max_iter=1).fit(by_item(120))
+    assert m.converged_ is False and m.n_iter_ == 1
