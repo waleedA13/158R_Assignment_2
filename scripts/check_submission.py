@@ -48,7 +48,7 @@ def drive_file_id(url: str) -> str | None:
 
 
 def first_chunk(url: str, get) -> bytes:
-    return next(get(url, stream=True).iter_content(chunk_size=CHUNK))
+    return next(get(url, stream=True).iter_content(chunk_size=CHUNK), b"")  # empty body: b""
 
 
 def check_video(url: str, get=requests.get, mime_from_buffer=None) -> str:
@@ -67,6 +67,10 @@ def check_video(url: str, get=requests.get, mime_from_buffer=None) -> str:
         text = chunk.decode("utf8", errors="replace")
         if "Virus scan warning" not in text:
             raise CheckError("The video file is less than 1mb; it is probably not a video (check sharing).")
+        if 'uuid" value="' not in text:
+            raise CheckError(
+                "Could not follow Google's virus scan page (no uuid found). Check the sharing link."
+            )
         uuid = text.split('uuid" value="')[1].split('"')[0]
         chunk = first_chunk(
             f"https://drive.usercontent.google.com/download?id={file_id}&export=download&confirm=t&uuid={uuid}",
