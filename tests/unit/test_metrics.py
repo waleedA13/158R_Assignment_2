@@ -57,3 +57,46 @@ def test_average_auc_uses_dataframe_column_names_not_position():
     )
     shuffled = perfect[["fit", "large", "small"]]  # sklearn's alphabetical classes_ order
     assert metrics.average_auc(y, shuffled) == 1.0
+
+
+def _noisy_scores(n=300, seed=0):
+    rng = np.random.default_rng(seed)
+    y = rng.choice(metrics.CLASSES, size=n, p=[0.15, 0.7, 0.15])
+    onehot = np.array([[c == k for k in metrics.CLASSES] for c in y], dtype=float)
+    raw = rng.dirichlet([1, 1, 1], size=n) + onehot
+    return y, pd.DataFrame(raw / raw.sum(axis=1, keepdims=True), columns=list(metrics.CLASSES))
+
+
+def test_bootstrap_ci_brackets_the_point_estimate():
+    y, proba = _noisy_scores()
+    ci = metrics.bootstrap_ci(y, proba, n_boot=200, seed=1)
+    auc, f1 = metrics.average_auc(y, proba), metrics.macro_f1(y, proba.idxmax(axis=1))
+    assert ci["average AUC"][0] < auc < ci["average AUC"][1]
+    assert ci["macro-F1"][0] < f1 < ci["macro-F1"][1]
+
+
+def test_bootstrap_ci_same_seed_same_interval():
+    y, proba = _noisy_scores()
+    assert metrics.bootstrap_ci(y, proba, n_boot=50, seed=3) == metrics.bootstrap_ci(
+        y, proba, n_boot=50, seed=3
+    )
+
+
+def test_bootstrap_ci_perfect_scores_have_zero_width():
+    y = np.array(Y * 10)
+    proba = np.array([{"small": [1, 0, 0], "fit": [0, 1, 0], "large": [0, 0, 1]}[c] for c in y], dtype=float)
+    ci = metrics.bootstrap_ci(y, proba, n_boot=50)
+    assert ci["average AUC"] == (1.0, 1.0) and ci["macro-F1"] == (1.0, 1.0)
+
+
+def test_bootstrap_ci_constant_scores_give_half():
+    y = np.array(Y * 10)
+    ci = metrics.bootstrap_ci(y, np.tile([0.2, 0.6, 0.2], (len(y), 1)), n_boot=50)
+    assert ci["average AUC"] == (0.5, 0.5)
+
+
+def test_bootstrap_ci_skips_resamples_missing_a_class():
+    y = np.array(["fit"] * 9 + ["small"] * 2 + ["large"])  # a resample often drops the lone "large"
+    proba = np.tile([0.3, 0.4, 0.3], (len(y), 1))
+    ci = metrics.bootstrap_ci(y, proba, n_boot=100)
+    assert ci["average AUC"] == (0.5, 0.5)

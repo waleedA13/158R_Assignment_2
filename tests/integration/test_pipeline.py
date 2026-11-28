@@ -39,3 +39,17 @@ def test_load_split_preprocess_on_fixture(df):
     for part in (train, valid, test):
         assert not part[list(data.NUMERIC)].isna().any(axis=None)
         assert set(data.POST_RENTAL).isdisjoint(part.columns)
+
+
+def test_every_final_model_trains_and_is_scored_on_fixture(df):
+    from src import metrics, models
+
+    train, _, test = data.preprocess(*data.split(df))
+    final = {"MajorityClass": models.MajorityClass()}
+    final.update({name: getattr(models, name)(**params) for name, params in models.BEST_PARAMS.items()})
+    for model in final.values():
+        proba = model.fit(train).predict_proba(test)
+        assert 0.0 <= metrics.average_auc(test["fit"], proba) <= 1.0
+        assert 0.0 <= metrics.macro_f1(test["fit"], model.predict(test)) <= 1.0
+        low, high = metrics.bootstrap_ci(test["fit"], proba, n_boot=20)["average AUC"]
+        assert low <= high
