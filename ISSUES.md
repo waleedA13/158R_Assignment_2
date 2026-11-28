@@ -391,7 +391,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Context & Scope:** Grid or small search over key hyperparameters (regularization, latent dimension, etc.) using validation only.
 **Acceptance Criteria:**
 - [x] Table or plot of validation metric vs. hyperparameter
-- [ ] Chosen values recorded and used in I-12
+- [x] Chosen values recorded and used in I-12
 - [x] Test set not used
 **Dependencies:** I-10
 
@@ -415,9 +415,9 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:eval` `area:s4-eval` `P0` `status:blocked` `owner:agent-ok` `Order 5` `Aditya`
 **Context & Scope:** `src/metrics.py` + `notebooks/04_eval.ipynb`. Score every model (I-08 to I-11) on the held-out test set once.
 **Acceptance Criteria:**
-- [ ] One results table: every model × primary + secondary metric
-- [ ] Results reproducible from a fresh kernel
-- [ ] Variance or a confidence estimate reported (seeds, bootstrap, or similar)
+- [x] One results table: every model × primary + secondary metric
+- [x] Results reproducible from a fresh kernel
+- [x] Variance or a confidence estimate reported (seeds, bootstrap, or similar)
 **Dependencies:** I-08, I-09 (I-10/I-11 rows added when ready)
 
 **Agent prompt** (paste into your coding agent):
