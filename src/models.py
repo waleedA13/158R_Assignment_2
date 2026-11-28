@@ -11,6 +11,8 @@ Only `fit` and `predict_proba` need writing: `predict` is the argmax of `predict
 Score with src.metrics: `average_auc(df["fit"], proba)` and `macro_f1(df["fit"], labels)`.
 """
 
+import warnings
+
 import numpy as np
 import pandas as pd
 from scipy import sparse
@@ -197,6 +199,11 @@ class LatentFactorFit(Model):
 
         res = minimize(objective, theta0, jac=True, method="L-BFGS-B", options={"maxiter": self.max_iter})
         self.params_, self.n_iter_ = self._unpack(res.x, d), res.nit
+        self.converged_ = bool(res.success)
+        if not self.converged_:
+            warnings.warn(
+                f"LatentFactorFit did not converge in {res.nit} iterations: {res.message}", stacklevel=2
+            )
         return self
 
     def predict_proba(self, df: pd.DataFrame) -> pd.DataFrame:
