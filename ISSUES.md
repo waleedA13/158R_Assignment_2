@@ -338,9 +338,9 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:model` `area:s3-modeling` `P0` `status:blocked` `owner:agent-ok` `Order 4` `Aditya`
 **Context & Scope:** A model taught in the course that fits the task (e.g. linear/logistic regression on features, latent factor model with biases, Jaccard/similarity-based recommender). Required by the spec even if the main model comes from elsewhere.
 **Acceptance Criteria:**
-- [ ] Model implemented with the shared interface; validation score reported
-- [ ] Inputs, outputs and objective stated in markdown
-- [ ] Beats or is compared honestly against I-08
+- [x] Model implemented with the shared interface; validation score reported
+- [x] Inputs, outputs and objective stated in markdown
+- [x] Beats or is compared honestly against I-08
 **Dependencies:** I-08
 
 **Agent prompt** (paste into your coding agent):
