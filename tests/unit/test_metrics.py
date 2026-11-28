@@ -63,7 +63,7 @@ def _noisy_scores(n=300, seed=0):
     rng = np.random.default_rng(seed)
     y = rng.choice(metrics.CLASSES, size=n, p=[0.15, 0.7, 0.15])
     onehot = np.array([[c == k for k in metrics.CLASSES] for c in y], dtype=float)
-    raw = rng.dirichlet([1, 1, 1], size=n) + onehot
+    raw = rng.dirichlet([1, 1, 1], size=n) + 0.3 * onehot  # weak signal, so the AUC is not 1
     return y, pd.DataFrame(raw / raw.sum(axis=1, keepdims=True), columns=list(metrics.CLASSES))
 
 
