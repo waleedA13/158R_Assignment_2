@@ -390,9 +390,9 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 **Labels:** `type:model` `area:s3-modeling` `P1` `status:blocked` `owner:agent-ok` `Order 6` `Aditya`
 **Context & Scope:** Grid or small search over key hyperparameters (regularization, latent dimension, etc.) using validation only.
 **Acceptance Criteria:**
-- [ ] Table or plot of validation metric vs. hyperparameter
+- [x] Table or plot of validation metric vs. hyperparameter
 - [ ] Chosen values recorded and used in I-12
-- [ ] Test set not used
+- [x] Test set not used
 **Dependencies:** I-10
 
 **Agent prompt** (paste into your coding agent):
