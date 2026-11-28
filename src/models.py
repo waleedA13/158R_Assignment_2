@@ -215,5 +215,5 @@ class LatentFactorFit(Model):
 # Tuned on validation in notebooks/03_models.ipynb (I-11). Build a model: getattr(models, name)(**params).
 BEST_PARAMS = {
     "LogisticRegression": {"C": 0.01, "class_weight": "balanced"},
-    "LatentFactorFit": {"K": 0, "lam": 2.0, "class_weight": "balanced"},
+    "LatentFactorFit": {"K": 0, "lam": 2.0, "class_weight": "balanced", "max_iter": 2000},
 }
