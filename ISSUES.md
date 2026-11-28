@@ -593,7 +593,7 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 ```
 
 ### I-19 · Build slide deck (human-written wording)
-**Labels:** `type:presentation` `area:video` `P0` `status:blocked` `owner:human` `Order 3` `Aditya`
+**Labels:** `type:presentation` `area:video` `P0` `status:ready` `owner:human` `Order 3` `Aditya`
 **Context & Scope:** **Owner: Aditya** builds the deck (template, layout, S3 to S5 slides). Waleed writes the slide text for the intro, S1 and S2, which he presents. Slides for the 5 sections, planned to switch to code walkthroughs of `workbook.html`. Agents may make charts or check numbers against the notebook; humans write all slide text. The rubric gives 1/5 to presentations that look auto-generated.
 **Acceptance Criteria:**
 - [ ] Template ready Thu 11-26 (Aditya); intro, S1, S2 text from Waleed Thu 11-26; S3, S4, S5 drafted Fri 11-27 (Aditya)
