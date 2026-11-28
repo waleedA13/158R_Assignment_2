@@ -191,3 +191,19 @@ def test_latent_warns_and_flags_when_it_stops_at_max_iter():
     with pytest.warns(UserWarning, match="did not converge"):
         m = models.LatentFactorFit(K=2, max_iter=1).fit(by_item(120))
     assert m.converged_ is False and m.n_iter_ == 1
+
+
+# BEST_PARAMS (I-11): the tuned settings I-12 imports
+def test_best_params_names_real_model_classes_and_constructs_them():
+    assert set(models.BEST_PARAMS) == {"LogisticRegression", "LatentFactorFit"}
+    for name, params in models.BEST_PARAMS.items():
+        cls = getattr(models, name)
+        assert issubclass(cls, models.Model)
+        assert isinstance(cls(**params), cls)
+
+
+def test_best_params_models_fit_and_predict_on_a_small_frame():
+    train = by_item(120)
+    for name, params in models.BEST_PARAMS.items():
+        proba = getattr(models, name)(**params).fit(train).predict_proba(by_item(30, seed=1))
+        np.testing.assert_allclose(proba.sum(axis=1), 1.0)
