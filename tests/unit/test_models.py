@@ -207,3 +207,7 @@ def test_best_params_models_fit_and_predict_on_a_small_frame():
     for name, params in models.BEST_PARAMS.items():
         proba = getattr(models, name)(**params).fit(train).predict_proba(by_item(30, seed=1))
         np.testing.assert_allclose(proba.sum(axis=1), 1.0)
+
+
+def test_best_params_raise_the_latent_iteration_cap_above_the_default():
+    assert models.BEST_PARAMS["LatentFactorFit"]["max_iter"] > models.LatentFactorFit().max_iter
