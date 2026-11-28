@@ -62,9 +62,9 @@ Every section needs all three spec parts (context, discussion, code), or graders
 
 | Owner | GitHub | Owns | Issues |
 |---|---|---|---|
-| Waleed | `waleedA13` | dataset decision, setup, CI, split, EDA, preprocessing, notebook assembly, submission | I-01, I-02, I-03, I-04, I-06, I-07, I-16, I-17, I-18, I-21, I-23 |
-| Aditya | `AdityaJadhav17` | task framing, all models, evaluation, related work | I-05, I-08, I-09, I-10, I-11, I-12, I-13, I-14, I-15 |
-| Both | Waleed + Aditya | slides for your own sections, video, peer grading (each person) | I-19, I-20, I-22 |
+| Waleed | `waleedA13` | dataset decision, setup, CI, split, EDA, preprocessing, notebook assembly, submission; writes and presents the intro, S1 and S2 slides | I-01, I-02, I-03, I-04, I-06, I-07, I-16, I-17, I-18, I-21, I-23 |
+| Aditya | `AdityaJadhav17` | task framing, all models, evaluation, related work; owns the slide deck and records and edits the video; presents S3 to S5 | I-05, I-08, I-09, I-10, I-11, I-12, I-13, I-14, I-15, I-19, I-20 |
+| Both | Waleed + Aditya | peer grading (each person) | I-22 |
 
 Aditya can start I-14 (related work) and I-05 (task framing) right after I-03 is decided, while Waleed builds the split (I-04).
 
@@ -593,10 +593,10 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 ```
 
 ### I-19 · Build slide deck (human-written wording)
-**Labels:** `type:presentation` `area:video` `P0` `status:blocked` `owner:human` `Order 3` `Waleed` `Aditya`
-**Context & Scope:** Slides for the 5 sections, planned to switch to code walkthroughs of `workbook.html`. Agents may make charts or check numbers against the notebook; humans write all slide text. The rubric gives 1/5 to presentations that look auto-generated.
+**Labels:** `type:presentation` `area:video` `P0` `status:ready` `owner:human` `Order 3` `Aditya`
+**Context & Scope:** **Owner: Aditya** builds the deck (template, layout, S3 to S5 slides). Waleed writes the slide text for the intro, S1 and S2, which he presents. Slides for the 5 sections, planned to switch to code walkthroughs of `workbook.html`. Agents may make charts or check numbers against the notebook; humans write all slide text. The rubric gives 1/5 to presentations that look auto-generated.
 **Acceptance Criteria:**
-- [ ] Slide template made Wed 11-25; intro, S1, S2 drafted Wed; S3, S4, S5 drafted Fri 11-27
+- [ ] Template ready Thu 11-26 (Aditya); intro, S1, S2 text from Waleed Thu 11-26; S3, S4, S5 drafted Fri 11-27 (Aditya)
 - [ ] One clearly titled block per section, in the same order as the notebook, each with context, discussion and a code walkthrough
 - [ ] Every number on a slide matches `workbook.html` (checked after I-17)
 - [ ] Follows the talk time budget in "Parts and roles" (target 20 min, max 22)
@@ -609,7 +609,7 @@ Read AGENTS.md and HANDOFF.md first, then this issue (I-19) in ISSUES.md. Follow
 Branch: i19-slides from up-to-date main. Commit messages: "[I-19] ...".
 
 This is human-only work (owner:human). The agent may only help with the checks below. It must not write slide text, narration, or reviews.
-Each person writes the slides for their own sections in their own words: Waleed for the intro, S1 and S2; Aditya for S3, S4 and S5 (see the talk time budget in ISSUES.md). Start Wed 11-25 with the sections that are already done; do not wait for the frozen notebook.
+Aditya owns the deck: template, layout, and the S3, S4, S5 slides. Waleed writes the intro, S1 and S2 slide text in his own words (he presents them); Aditya places it in the deck without rewording. Start now with the sections that are already done; do not wait for the frozen notebook.
 Helper prompt for the agent (checks only):
 "From workbook.html, list every number, table and plot title by section with the cell it comes from, as a checklist in slides/numbers.md. Then compare against slides/ (exported text) and list any number on a slide that does not match the notebook. Do not write or rewrite any slide text."
 Plan the timing so the total is 18 to 22 minutes, in the same order as the notebook sections.
@@ -619,8 +619,8 @@ Before you stop: tick the acceptance criteria you met in ISSUES.md, add a dated 
 ```
 
 ### I-20 · Record and edit ~20-min MP4 video
-**Labels:** `type:presentation` `area:video` `P0` `status:blocked` `owner:human` `Order 9` `Waleed` `Aditya`
-**Context & Scope:** Record slides plus code walkthrough (Zoom or similar). Export H.264 MP4.
+**Labels:** `type:presentation` `area:video` `P0` `status:blocked` `owner:human` `Order 9` `Aditya`
+**Context & Scope:** **Owner: Aditya** records and edits. Record slides plus code walkthrough (Zoom or similar), Waleed narrating the intro, S1 and S2 and Aditya S3 to S5. Export H.264 MP4.
 **Acceptance Criteria:**
 - [ ] Length 18 to 22 min
 - [ ] MP4, H.264/AAC, plays in a standard browser and in QuickTime
@@ -635,7 +635,7 @@ Read AGENTS.md and HANDOFF.md first, then this issue (I-20) in ISSUES.md. Follow
 Branch: i20-video from up-to-date main. Commit messages: "[I-20] ...".
 
 This is human-only work (owner:human). The agent may only help with the checks below. It must not write slide text, narration, or reviews.
-Record slides plus a live code walkthrough of workbook.html (Zoom or similar), both of you narrating your own sections.
+Aditya records and edits a live walkthrough of the slides and workbook.html (Zoom or similar). Waleed narrates the intro, S1 and S2; Aditya narrates S3 to S5.
 Helper prompt for the agent (file checks only):
 "Run ffprobe on the recorded file and report duration, container, video codec, audio codec and resolution. If it is not H.264/AAC MP4, give me the single ffmpeg command to convert it (libx264, -preset veryfast, aac) and nothing else."
 Done when: 18 to 22 minutes, H.264/AAC MP4, plays in a browser and in QuickTime, code readable at 1080p, audio clear.
